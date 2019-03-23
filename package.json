@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/averhagen/classic.buffed/issues"
   },
-  "homepage": "https://github.com/averhagen/classic.buffed#readme"
+  "homepage": "https://github.com/averhagen/classic.buffed#readme",
+  "dependencies": {
+    "typescript": "^3.3.4000"
+  }
 }
