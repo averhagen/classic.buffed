@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/averhagen/classic.buffed#readme",
   "dependencies": {
+    "express": "^4.16.4",
     "typescript": "^3.3.4000"
   }
 }
