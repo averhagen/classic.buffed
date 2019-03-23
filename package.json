@@ -1,0 +1,19 @@
+{
+  "name": "classic.buffed",
+  "version": "1.0.0",
+  "description": "A tool that enables classic wow players to build buffs and to view character stats after buffs are applied.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/averhagen/classic.buffed.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/averhagen/classic.buffed/issues"
+  },
+  "homepage": "https://github.com/averhagen/classic.buffed#readme"
+}
