@@ -1,5 +1,5 @@
 import express = require('express');
-import connection = require('./models/connect');
+import connection = require('./models/data_connection');
 
 // Create a new express application instance
 const app: express.Application = express();
