@@ -11,6 +11,7 @@ var express = require("express");
 // Connect to mongo database via import side effects.
 Promise.resolve().then(function () { return __importStar(require('./models/data_connection')); });
 var buff_controller_1 = require("./routes/buff_controller");
+var stat_controller_1 = require("./routes/stat_controller");
 // Create a new express application instance
 var app = express();
 app.get('/', function (req, res) {
@@ -21,6 +22,9 @@ var buffController = new buff_controller_1.BuffController();
 app.route('/buff')
     .get(buffController.getBuffs)
     .post(buffController.addNewBuff);
+var statController = new stat_controller_1.StatController();
+app.route('/stat')
+    .post(statController.addNewStat);
 // Start app listening on port 3000
 app.listen(3000, function () {
     console.log('Example app listening on port 3000!');
