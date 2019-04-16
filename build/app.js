@@ -12,8 +12,10 @@ var express = require("express");
 Promise.resolve().then(function () { return __importStar(require('./models/data_connection')); });
 var buff_controller_1 = require("./routes/buff_controller");
 var stat_controller_1 = require("./routes/stat_controller");
+var buff_stat_value_controller_1 = require("./routes/buff_stat_value_controller");
 // Create a new express application instance
 var app = express();
+app.use(express.json());
 app.get('/', function (req, res) {
     res.send('Hello World!');
 });
@@ -22,9 +24,15 @@ var buffController = new buff_controller_1.BuffController();
 app.route('/buff')
     .get(buffController.getBuffs)
     .post(buffController.addNewBuff);
+// Controller and routed methods used for Stat API
 var statController = new stat_controller_1.StatController();
 app.route('/stat')
     .post(statController.addNewStat);
+// Controller and routed methods used for BuffStatValue API
+var buffStatValueController = new buff_stat_value_controller_1.BuffStatValueController();
+app.route('/buffstatvalue')
+    .get(buffStatValueController.getBuffStatValue)
+    .post(buffStatValueController.addNewBuffStatValue);
 // Start app listening on port 3000
 app.listen(3000, function () {
     console.log('Example app listening on port 3000!');
