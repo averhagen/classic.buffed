@@ -1,4 +1,6 @@
 module.exports = {
+  globalSetup: './test_env/setup.js',
+  globalTeardown: './test_env/teardown.js',
   preset: 'ts-jest',
-  testEnvironment: 'node',
+  testEnvironment: './test_env/mongo_env.js'
 };
