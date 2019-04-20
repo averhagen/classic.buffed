@@ -17,8 +17,8 @@ class MongoEnvironment extends NodeEnvironment {
 
     const globalConfig = JSON.parse(fs.readFileSync(globalConfigPath, 'utf-8'));
 
-    this.global.__MONGO_URI__ = globalConfig.mongoUri;
-    this.global.__MONGO_DB_NAME__ = globalConfig.mongoDBName;
+    this.global.test_env.__MONGO_URI__ = globalConfig.mongoUri;
+    this.global.test_env.__MONGO_DB_NAME__ = globalConfig.mongoDBName;
 
     await super.setup();
   }
