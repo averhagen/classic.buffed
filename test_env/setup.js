@@ -1,4 +1,9 @@
 // setup.js
+/*
+  The setup does the following:
+      starts an in memory mongodb server,
+      exports mongo params to 'globalConfig.json"
+*/
 const path = require('path');
 
 const fs = require('fs');
