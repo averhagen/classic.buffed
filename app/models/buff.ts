@@ -1,8 +1,19 @@
 import mongoose = require('mongoose');
 
-const buffSchema = new mongoose.Schema({
-    name: String,
-    rank: Number,
-}, { collection: 'buff'});
+const buffCollectionName: string = "buff";
+const nameFieldOptions = { type: String, required: true };
+const rankFieldOptions = { type: Number, required: true };
 
-export { buffSchema };
+interface BuffDocument extends mongoose.Document {
+    name: typeof nameFieldOptions.type,
+    rank: typeof rankFieldOptions.type
+}
+
+const buffSchema = new mongoose.Schema({
+    name: nameFieldOptions,
+    rank: rankFieldOptions,
+}, { collection: buffCollectionName });
+
+const BuffModel = mongoose.model<BuffDocument>(buffCollectionName, buffSchema);
+
+export { buffSchema, BuffDocument, BuffModel };

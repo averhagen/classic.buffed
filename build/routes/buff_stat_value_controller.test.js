@@ -38,21 +38,31 @@ var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var mongoose = require("mongoose");
 beforeAll(function () { return __awaiter(_this, void 0, void 0, function () {
+    var options;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, mongoose.connect(global.__MONGO_URI__, {
-                    useNewUrlParser: true
-                })];
+            case 0:
+                options = {
+                    useNewUrlParser: true,
+                    dbName: global.test_env.__MONGO_DB_NAME__
+                };
+                return [4 /*yield*/, mongoose.connect(global.test_env.__MONGO_URI__, options)];
             case 1:
                 _a.sent();
                 return [2 /*return*/];
         }
     });
 }); });
-var testObject = {
-    trueValue: true,
-    falseValue: false
-};
-test("Test trueValue to be true.", function () {
-    expect(testObject.trueValue).toBe(true);
+afterAll(function () { return __awaiter(_this, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, mongoose.connection.close()];
+            case 1:
+                _a.sent();
+                return [2 /*return*/];
+        }
+    });
+}); });
+test("Test that the connected mongo db name matches the mongo db name param.", function () {
+    expect(mongoose.connection.db.databaseName).toBe(global.test_env.__MONGO_DB_NAME__);
 });
