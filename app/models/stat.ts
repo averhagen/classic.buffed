@@ -1,9 +1,15 @@
 import mongoose = require("mongoose");
 
-const statCollectionName: string = "stat";
+const collectionName: string = "stat";
+const nameFieldOptions = { type: String, required: true };
 
-const statSchema = new mongoose.Schema({
-    name: String,
-}, { collection: statCollectionName });
+const statSchemaDefinition: mongoose.SchemaDefinition = {
+    name: nameFieldOptions
+};
+
+const statSchema = new mongoose.Schema(
+    statSchemaDefinition,
+    { collection: collectionName }
+);
 
 export { statSchema }
