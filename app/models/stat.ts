@@ -1,8 +1,9 @@
 import mongoose = require("mongoose");
 
+const statCollectionName: string = "stat";
 
 const statSchema = new mongoose.Schema({
     name: String,
-}, { collection: 'stat'});
+}, { collection: statCollectionName });
 
 export { statSchema }
