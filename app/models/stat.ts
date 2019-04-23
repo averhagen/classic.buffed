@@ -13,4 +13,9 @@ const statSchema = new mongoose.Schema(
     { collection: collectionName }
 );
 
+interface StatDocument extends mongoose.Document {
+    name: typeof nameFieldOptions.type
+}
+
+
 export { statSchema }
