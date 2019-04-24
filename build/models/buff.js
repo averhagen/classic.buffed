@@ -8,6 +8,5 @@ var buffSchema = new mongoose.Schema({
     name: nameFieldOptions,
     rank: rankFieldOptions,
 }, { collection: buffCollectionName });
-exports.buffSchema = buffSchema;
 var BuffModel = mongoose.model(buffCollectionName, buffSchema);
 exports.BuffModel = BuffModel;

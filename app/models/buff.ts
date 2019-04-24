@@ -16,4 +16,4 @@ const buffSchema = new mongoose.Schema({
 
 const BuffModel = mongoose.model<BuffDocument>(buffCollectionName, buffSchema);
 
-export { buffSchema, BuffDocument, BuffModel };
+export { BuffDocument, BuffModel };
