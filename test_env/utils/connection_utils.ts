@@ -1,6 +1,6 @@
 import mongoose = require("mongoose");
 
-export async function start_connection_to_test_db() {
+export async function startConnectionToTestDB() {
     const options = {
         useNewUrlParser: true,
         dbName: global.test_env.__MONGO_DB_NAME__
@@ -8,6 +8,12 @@ export async function start_connection_to_test_db() {
     await mongoose.connect(global.test_env.__MONGO_URI__, options);
 }
 
-export async function stop_connection_to_test_db() {
+export async function stopConnectionToTestDB() {
     await mongoose.connection.close();
+}
+
+export async function testConnectionIsValid() {
+    test("Test that the connected mongo db name matches the mongo db name param.", () => {
+        expect(mongoose.connection.db.databaseName).toBe(global.test_env.__MONGO_DB_NAME__);
+    });
 }
