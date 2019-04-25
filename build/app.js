@@ -23,7 +23,7 @@ app.get('/', function (req, res) {
 var buffController = new buff_controller_1.BuffController();
 app.route('/buff')
     .get(buffController.getBuffs)
-    .post(buffController.addNewBuff);
+    .post(buffController.createBuff);
 // Controller and routed methods used for Stat API
 var statController = new stat_controller_1.StatController();
 app.route('/stat')
