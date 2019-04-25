@@ -1,9 +1,9 @@
 import express = require('express');
 // Connect to mongo database via import side effects.
 import('./data_connection');
-import { BuffController } from './routes/buff_controller';
-import { StatController } from './routes/stat_controller';
-import { BuffStatValueController } from './routes/buff_stat_value_controller'
+import { BuffController } from './controllers/buff_controller';
+import { StatController } from './controllers/stat_controller';
+import { BuffStatValueController } from './controllers/buff_stat_value_controller'
 
 // Create a new express application instance
 const app: express.Application = express();
@@ -17,7 +17,7 @@ app.get('/', function (req, res) {
 const buffController: BuffController = new BuffController();
 app.route('/buff')
   .get(buffController.getBuffs)
-  .post(buffController.addNewBuff);
+  .post(buffController.createBuff);
 
 // Controller and routed methods used for Stat API
 const statController: StatController = new StatController();
