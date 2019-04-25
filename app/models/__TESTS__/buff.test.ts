@@ -1,4 +1,4 @@
-import * as connection_utils from "../../../test_env/utils/connection_utils";
+import * as connection_utils from "../../test_utils/connection_utils";
 import { BuffModel } from "../buff";
 
 beforeAll(connection_utils.startConnectionToTestDB);
