@@ -18,3 +18,10 @@ test("That saving a Buff without a Rank throws an error.", async () => {
     const buffDocument = new BuffModel(docWithoutRankAttribute);
     expect(buffDocument.save()).rejects.not.toBeNull();
 });
+
+
+test("That saving a Buff without a Rank or Name throws an error", async () => {
+    const docWithoutRankOrBuffAttribute = {};
+    const buffDocument = new BuffModel(docWithoutRankOrBuffAttribute);
+    expect(buffDocument.save()).rejects.not.toBeNull();
+});
