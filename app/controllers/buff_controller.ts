@@ -4,7 +4,7 @@ import { BuffModel } from "../models/buff";
 
 export class BuffController {
 
-    public addNewBuff(req: Request, res: Response) {
+    public createBuff(req: Request, res: Response) {
         console.log("Received buff post request: " + req.url);
         const newBuff = new BuffModel({ name: req.query["name"], rank: req.query["rank"] });
         newBuff.save((err, contact) => {
