@@ -71,12 +71,27 @@ var BuffController = /** @class */ (function () {
         };
     };
     BuffController.prototype.getBuffs = function (req, res) {
-        console.log("Received buff get request: " + req.url);
-        buff_1.BuffModel.find({}, function (err, contact) {
-            if (err) {
-                res.send(err);
-            }
-            res.json(contact);
+        return __awaiter(this, void 0, void 0, function () {
+            var foundBuffDocuments, error_2;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        console.log("Received buff get request: " + req.url);
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, buff_1.BuffModel.find({}).exec()];
+                    case 2:
+                        foundBuffDocuments = _a.sent();
+                        res.json(foundBuffDocuments);
+                        return [3 /*break*/, 4];
+                    case 3:
+                        error_2 = _a.sent();
+                        res.send(error_2);
+                        return [3 /*break*/, 4];
+                    case 4: return [2 /*return*/];
+                }
+            });
         });
     };
     return BuffController;

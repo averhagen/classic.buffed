@@ -23,14 +23,15 @@ export class BuffController {
         }
     }
 
-    public getBuffs(req: Request, res: Response) {
+    public async getBuffs(req: Request, res: Response) {
         console.log("Received buff get request: " + req.url);
-        BuffModel.find({}, (err, contact) => {
-            if (err) {
-                res.send(err);
-            }
-            res.json(contact);
-        });
+
+        try {
+            const foundBuffDocuments = await BuffModel.find({}).exec();
+            res.json(foundBuffDocuments);
+        } catch (error) {
+            res.send(error);
+        }
     }
 }
 
