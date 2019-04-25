@@ -1,5 +1,5 @@
 import * as connection_utils from "../../../test_env/utils/connection_utils";
-import { BuffModel, BuffDocument } from "../buff";
+import { BuffModel} from "../buff";
 
 beforeAll(connection_utils.startConnectionToTestDB);
 
@@ -9,6 +9,6 @@ connection_utils.testConnectionIsValid();
 
 test("That saving a Buff without a name throws an error.", async () => {
     const docWithoutNameAttribute = { rank: 2 };
-    const abc = new BuffModel(docWithoutNameAttribute);
-    expect(abc.save()).rejects.not.toBeNull();
+    const buffDocument = new BuffModel(docWithoutNameAttribute);
+    expect(buffDocument.save()).rejects.not.toBeNull();
 });
