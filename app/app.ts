@@ -16,13 +16,13 @@ app.get('/', function (req, res) {
 // Controller and methods used for the Buff api
 const buffController: BuffController = new BuffController();
 app.route('/buff')
-  .get(buffController.getBuffs)
-  .post(buffController.createBuff);
+  .get(buffController.getBuffs.bind(buffController))
+  .post(buffController.createBuff.bind(buffController));
 
 // Controller and routed methods used for Stat API
 const statController: StatController = new StatController();
 app.route('/stat')
-  .post(statController.addNewStat);
+  .post(statController.createStat.bind(statController));
 
 // Controller and routed methods used for BuffStatValue API
 const buffStatValueController: BuffStatValueController = new BuffStatValueController();
