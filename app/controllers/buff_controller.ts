@@ -1,4 +1,3 @@
-import mongoose = require('mongoose');
 import { Request, Response } from "express";
 import { BuffModel } from "../models/buff";
 
