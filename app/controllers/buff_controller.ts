@@ -9,7 +9,7 @@ export class BuffController {
         const buffValues = this.extractBuffValuesFromReq(req);
 
         try {
-            const buffDocument = await new BuffModel(buffValues);
+            const buffDocument = await new BuffModel(buffValues).save();
             res.json(buffDocument);
         } catch (error) {
             res.send(error);
