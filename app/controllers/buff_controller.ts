@@ -26,7 +26,7 @@ export class BuffController {
         console.log("Received buff get request: " + req.url);
 
         try {
-            const foundBuffDocuments = await BuffModel.find({}).exec();
+            const foundBuffDocuments = await BuffModel.findOne(req.query).exec();
             res.json(foundBuffDocuments);
         } catch (error) {
             res.send(error);
