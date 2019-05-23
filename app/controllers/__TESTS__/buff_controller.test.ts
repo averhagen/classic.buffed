@@ -35,3 +35,34 @@ test("Using the buff controller to make a buff creates a buff with the correct v
     expect(createdBuff.name).toEqual(buffName);
     expect(createdBuff.rank).toEqual(buffRank);
 });
+
+test("That using the getBuff method of Buff returns the correct buff", async () => {
+
+    const buffValues = {
+        name: "Get buff test name",
+        rank: 3
+    };
+
+    const falseBuffValues = {
+        name: "Bad Value",
+        rank: 6
+    }
+
+    const req: any = {
+        query: {
+            name: buffValues.name,
+            rank: buffValues.rank
+        },
+    };
+
+    const res: any = {
+        json: jest.fn(),
+        send: jest.fn()
+    };
+
+    await new BuffModel(buffValues).save();
+    await new BuffController().getBuffs(req, res);
+
+    expect(res.json).toBeCalledWith(expect.objectContaining(buffValues));
+    expect(res.json).not.toBeCalledWith(expect.objectContaining(falseBuffValues));
+});
