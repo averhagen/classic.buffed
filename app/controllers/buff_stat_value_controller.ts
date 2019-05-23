@@ -3,18 +3,20 @@ import { BuffStatValue } from '../models/buff_stat_value';
 
 export class BuffStatValueController {
 
-    public addNewBuffStatValue(req: Request, res: Response) {
+    public async addNewBuffStatValue(req: Request, res: Response) {
         const newStatValue = new BuffStatValue({
             buff: req.body["buff"],
             stat: req.body["stat"],
             value: req.body["value"]
         });
-        newStatValue.save((err, contact) => {
-            if (err) {
-                res.send(err);
-            }
-            res.json(contact);
-        })
+
+        try {
+            const buffStatValueDoc = await newStatValue.save();
+            res.json(buffStatValueDoc);
+        } catch (error) {
+            res.send(error);
+            console.log(error);
+        }
     }
 
     public getBuffStatValue(req: Request, res: Response) {
