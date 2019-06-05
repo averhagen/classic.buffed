@@ -1,8 +1,7 @@
-import { startConnectionToTestDB, stopConnectionToTestDB } from "../../test_utils/connection_utils";
-import { BuffStatValue } from "../../models/buff_stat_value";
-import { BuffStatValueController } from "../buff_stat_value_controller";
 import { BuffModel } from "../../models/buff";
 import { statModel } from "../../models/stat";
+import { startConnectionToTestDB, stopConnectionToTestDB } from "../../test_utils/connection_utils";
+import { BuffStatValueController } from "../buff_stat_value_controller";
 
 beforeAll(startConnectionToTestDB);
 afterAll(stopConnectionToTestDB);
