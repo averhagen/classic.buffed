@@ -36,3 +36,11 @@ test("addNewBuffStatValue method creates the correct buffStatValue.", async () =
 
     expect(res.json).toBeCalled();
 });
+
+test("getBuffStatValue method returns the correct BuffStatValue with the correct params.", async () => {
+    const mockBuffValues = {
+        name: "getBuffStatValue buff name",
+        rank: 2
+    }
+    const buff = new BuffModel(mockBuffValues).save();
+});
