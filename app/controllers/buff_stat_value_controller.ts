@@ -4,14 +4,14 @@ import { BuffStatValue } from '../models/buff_stat_value';
 export class BuffStatValueController {
 
     public async addNewBuffStatValue(req: Request, res: Response) {
-        const newStatValue = new BuffStatValue({
+        const valuesForNewBuffStatValue = {
             buff: req.body["buff"],
             stat: req.body["stat"],
             value: req.body["value"]
-        });
+        };
 
         try {
-            const buffStatValueDoc = await newStatValue.save();
+            const buffStatValueDoc = await new BuffStatValue(valuesForNewBuffStatValue).save();
             res.json(buffStatValueDoc);
         } catch (error) {
             res.send(error);
