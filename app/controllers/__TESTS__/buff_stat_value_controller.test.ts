@@ -39,8 +39,13 @@ test("addNewBuffStatValue method creates the correct buffStatValue.", async () =
 
 test("getBuffStatValue method returns the correct BuffStatValue with the correct params.", async () => {
     const mockBuffValues = {
-        name: "getBuffStatValue buff name",
+        name: "getBuffStatValue test buff name",
         rank: 2
     }
-    const buff = new BuffModel(mockBuffValues).save();
+    const buff = await new BuffModel(mockBuffValues).save();
+
+    const mockStatValues = {
+        name: "getBuffStatValue test buff name"
+    }
+    const stat = await new statModel(mockStatValues).save();
 });
