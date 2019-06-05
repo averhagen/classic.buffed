@@ -33,7 +33,7 @@ test("addNewBuffStatValue method creates the correct buffStatValue.", async () =
         send: jest.fn()
     }
 
-   await new BuffStatValueController().addNewBuffStatValue(req, res);
+    await new BuffStatValueController().addNewBuffStatValue(req, res);
 
     expect(res.json).toBeCalled();
 });
