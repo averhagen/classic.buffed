@@ -1,5 +1,6 @@
 import { BuffModel } from "../../models/buff";
 import { statModel } from "../../models/stat";
+import { BuffStatValue } from "../../models/buff_stat_value";
 import { startConnectionToTestDB, stopConnectionToTestDB } from "../../test_utils/connection_utils";
 import { BuffStatValueController } from "../buff_stat_value_controller";
 
@@ -42,10 +43,30 @@ test("getBuffStatValue method returns the correct BuffStatValue with the correct
         name: "getBuffStatValue test buff name",
         rank: 2
     }
-    const buff = await new BuffModel(mockBuffValues).save();
+    const mockBuffDoc = await new BuffModel(mockBuffValues).save();
 
     const mockStatValues = {
         name: "getBuffStatValue test buff name"
     }
-    const stat = await new statModel(mockStatValues).save();
+    const mockStatDoc = await new statModel(mockStatValues).save();
+
+    await new BuffStatValue({buff: mockBuffDoc, stat: mockStatDoc, value: 400 }).save();
+
+    const buffStatValueController = new BuffStatValueController();
+
+    const req: any = {
+        body: {
+            buff: mockBuffDoc._id,
+            stat: mockStatDoc._id,
+        }
+    }
+
+    const res: any = {
+        json: jest.fn(),
+        send: jest.fn()
+    }
+
+    await buffStatValueController.getBuffStatValue(req, res);
+
+    expect(res.json).toBeCalled();
 });
