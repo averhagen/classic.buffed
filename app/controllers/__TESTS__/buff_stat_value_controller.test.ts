@@ -50,7 +50,7 @@ test("getBuffStatValue method returns the correct BuffStatValue with the correct
     }
     const mockStatDoc = await new statModel(mockStatValues).save();
 
-    await new BuffStatValue({buff: mockBuffDoc, stat: mockStatDoc, value: 400 }).save();
+    const buffStatValueDoc = await new BuffStatValue({buff: mockBuffDoc, stat: mockStatDoc, value: Math.floor(Math.random() * 100) }).save();
 
     const buffStatValueController = new BuffStatValueController();
 
@@ -69,4 +69,7 @@ test("getBuffStatValue method returns the correct BuffStatValue with the correct
     await buffStatValueController.getBuffStatValue(req, res);
 
     expect(res.json).toBeCalled();
+    expect(res.json).toBeCalledWith(expect.objectContaining({
+        value: buffStatValueDoc.value
+    }));
 });
