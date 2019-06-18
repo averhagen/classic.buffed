@@ -19,15 +19,26 @@ export class BuffStatValueController {
         }
     }
 
-    public getBuffStatValue(req: Request, res: Response) {
-        BuffStatValue.findOne().and([
-            { buff: req.body["buff"] },
-            { stat: req.body["stat"] }
-        ]).populate('buff').populate('stat').exec((err, buffStatValue) => {
-            if (err) {
-                res.send(err);
+    public async getBuffStatValue(req: Request, res: Response) {
+        try {
+            const foundDocument = await BuffStatValue.findOne().and([
+                { buff: req.body["buff"] }
+            ]).exec();
+            if(foundDocument != null) {
+                res.json({ value: foundDocument.value });
             }
-            res.json(buffStatValue);
-        });
+        } catch (error) {
+            console.log(error);
+        }
+        // BuffStatValue.findOne().and([
+        //     { buff: req.body["buff"] },
+        //     { stat: req.body["stat"] }
+        // ]).populate('buff').populate('stat').exec((err, buffStatValue) => {
+        //     if (err) {
+        //         console.log(err);
+        //         res.send(err);
+        //     }
+        //     res.json(buffStatValue);
+        // });
     }
 }
