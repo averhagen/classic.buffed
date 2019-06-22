@@ -19,4 +19,5 @@ const buffStateValueSchema = new mongoose.Schema({
     stat: statFieldOptions
 });
 
+export { BuffStatValueDocument };
 export const BuffStatValue = mongoose.model<BuffStatValueDocument>(collectionName, buffStateValueSchema);

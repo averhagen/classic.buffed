@@ -1,6 +1,6 @@
-import { BuffModel } from "../../models/buff";
-import { statModel } from "../../models/stat";
-import { BuffStatValue } from "../../models/buff_stat_value";
+import { BuffModel, BuffDocument } from "../../models/buff";
+import { statModel, StatDocument } from "../../models/stat";
+import { BuffStatValue, BuffStatValueDocument } from "../../models/buff_stat_value";
 import { startConnectionToTestDB, stopConnectionToTestDB } from "../../test_utils/connection_utils";
 import { BuffStatValueController } from "../buff_stat_value_controller";
 
@@ -39,25 +39,48 @@ test("addNewBuffStatValue method creates the correct buffStatValue.", async () =
 });
 
 test("getBuffStatValue method returns the correct BuffStatValue with the correct params.", async () => {
-    const mockBuffValues = {
-        name: "getBuffStatValue test buff name",
-        rank: 2
-    }
-    const mockBuffDoc = await new BuffModel(mockBuffValues).save();
 
-    const mockStatValues = {
-        name: "getBuffStatValue test buff name"
-    }
-    const mockStatDoc = await new statModel(mockStatValues).save();
+    const timeSeed = Date.now();
 
-    const buffStatValueDoc = await new BuffStatValue({buff: mockBuffDoc, stat: mockStatDoc, value: Math.floor(Math.random() * 100) }).save();
+    // Create and save fake buff data.
+    const mockBuffDocuments: BuffDocument[] = [];
+    for (let i = 0; i < 10; i++) {
+        const mockBuffName: String = "getBuffStatValue mock buff name " + timeSeed + i;
+        for (let j = 0; j < 5; j++) {
+            mockBuffDocuments.push(await new BuffModel({ name: mockBuffName, rank: j }).save());
+        }
+    }
+
+    //Create and save fake stat data.
+    const mockStatDocuments: StatDocument[] = [];
+    for (let i = 0; i < 10; i++) {
+        const mockBuffName: String = "getBuffStatValue mock stat name " + timeSeed + i;
+        mockStatDocuments.push(await new statModel({ name: mockBuffName }).save());
+    }
+
+    //Create and save mock BuffStatValue documents
+    const mockBuffStatValueDocuments: BuffStatValueDocument[] = [];
+    for (let i = 0; i < mockBuffDocuments.length; i++) {
+        for (let j = 0; j < mockStatDocuments.length; j++) {
+            const buffStatValueValues = {
+                buff: mockBuffDocuments[i]._id,
+                stat: mockStatDocuments[j]._id,
+                value: Math.floor(Math.random() * 50)
+            };
+            const savedBuffStatValue = await new BuffStatValue(buffStatValueValues).save();
+            mockBuffStatValueDocuments.push(savedBuffStatValue);
+        }
+    }
+
+    const randomIndex = Math.floor(Math.random() * mockBuffStatValueDocuments.length);
+    const selectedBuffStatValueDoc = mockBuffStatValueDocuments[randomIndex];
 
     const buffStatValueController = new BuffStatValueController();
 
     const req: any = {
         body: {
-            buff: mockBuffDoc._id,
-            stat: mockStatDoc._id,
+            buff: selectedBuffStatValueDoc.buff,
+            stat: selectedBuffStatValueDoc.stat
         }
     }
 
@@ -70,6 +93,6 @@ test("getBuffStatValue method returns the correct BuffStatValue with the correct
 
     expect(res.json).toBeCalled();
     expect(res.json).toBeCalledWith(expect.objectContaining({
-        value: buffStatValueDoc.value
+        value: selectedBuffStatValueDoc.value
     }));
 });
