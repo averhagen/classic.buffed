@@ -84,15 +84,14 @@ test("getBuffStatValue method returns the correct BuffStatValue with the correct
         }
     }
 
+    const resMockJsonFunction = jest.fn();
+
     const res: any = {
-        json: jest.fn(),
+        json: resMockJsonFunction,
         send: jest.fn()
     }
 
     await buffStatValueController.getBuffStatValue(req, res);
 
-    expect(res.json).toBeCalled();
-    expect(res.json).toBeCalledWith(expect.objectContaining({
-        value: selectedBuffStatValueDoc.value
-    }));
+    expect(resMockJsonFunction).toBeCalledWith(selectedBuffStatValueDoc.toJSON());
 });
