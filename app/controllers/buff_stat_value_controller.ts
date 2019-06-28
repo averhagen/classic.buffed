@@ -25,7 +25,7 @@ export class BuffStatValueController {
                 { buff: req.body["buff"], stat: req.body["stat"] }
             ]).exec();
             if(foundDocument != null) {
-                res.json({ value: foundDocument.value });
+                res.json(foundDocument.toJSON());
             }
         } catch (error) {
             console.log(error);
