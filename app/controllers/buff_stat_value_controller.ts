@@ -22,7 +22,7 @@ export class BuffStatValueController {
     public async getBuffStatValue(req: Request, res: Response) {
         try {
             const foundDocument = await BuffStatValue.findOne().and([
-                { buff: req.body["buff"] }
+                { buff: req.body["buff"], stat: req.body["stat"] }
             ]).exec();
             if(foundDocument != null) {
                 res.json({ value: foundDocument.value });
