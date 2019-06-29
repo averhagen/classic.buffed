@@ -3,7 +3,7 @@ import { BuffStatValue } from '../models/buff_stat_value';
 
 export class BuffStatValueController {
 
-    public async addNewBuffStatValue(req: Request, res: Response) {
+    public async addNewBuffStatValue(req: Request, res: Response, next: NextFunction) {
         const valuesForNewBuffStatValue = {
             buff: req.body["buff"],
             stat: req.body["stat"],

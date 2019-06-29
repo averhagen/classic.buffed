@@ -33,7 +33,7 @@ test("addNewBuffStatValue method creates the correct buffStatValue.", async () =
         send: jest.fn()
     }
 
-    await new BuffStatValueController().addNewBuffStatValue(req, res);
+    await new BuffStatValueController().addNewBuffStatValue(req, res, () => {});
 
     expect(res.json).toBeCalled();
 });
@@ -45,8 +45,10 @@ test("Sending a request with empty params to addBuffStatValue function causes an
     };
 
     const res: any = {
-
+        json: jest.fn()
     }
+
+    const next = jest.fn();
 
     await new BuffStatValueController().addNewBuffStatValue(emptyRequest, res, next);
 });
