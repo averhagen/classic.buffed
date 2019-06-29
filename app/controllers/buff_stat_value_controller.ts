@@ -22,17 +22,20 @@ export class BuffStatValueController {
     public async getBuffStatValue(req: Request, res: Response, next: NextFunction) {
         console.log("Received getBuffStatValue request");
         try {
-            const query = { buff: req.params["buff"], stat: req.params["stat"] };
-            const foundDocument = await BuffStatValue.findOne(query).exec();
-            if (foundDocument != null) {
-                res.json(foundDocument.toJSON());
-            } else {
-                throw new Error("Unable to find document with those params.");
+            const buffValue = req.params["buff"];
+            const statValue = req.params["stat"];
+
+            if (buffValue && statValue) {
+                const query = { buff: buffValue, stat: statValue };
+                const foundDocument = await BuffStatValue.findOne(query).exec();
+                if (foundDocument != null) {
+                    return res.json(foundDocument.toJSON());
+                }
             }
+
+            throw new Error("Unable to find document with given parameters.");
         } catch (error) {
-            next(error);
-            console.log(error);
+            return next(error);
         }
-        console.log("Sent getBuffStatValue response");
     }
 }
