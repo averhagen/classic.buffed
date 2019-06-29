@@ -38,6 +38,19 @@ test("addNewBuffStatValue method creates the correct buffStatValue.", async () =
     expect(res.json).toBeCalled();
 });
 
+test("Sending a request with empty params to addBuffStatValue function causes an error", async () => {
+
+    const emptyRequest: any = {
+        body: []
+    };
+
+    const res: any = {
+
+    }
+
+    await new BuffStatValueController().addNewBuffStatValue(emptyRequest, res, next);
+});
+
 test("getBuffStatValue method returns the correct BuffStatValue with the correct params.", async () => {
 
     const timeSeed = Date.now();
@@ -98,7 +111,7 @@ test("getBuffStatValue method returns the correct BuffStatValue with the correct
 });
 
 test("Sending a request with empty params to getBuffStatValue sends an error", async () => {
-    
+
     const req: any = {
         params: []
     }
