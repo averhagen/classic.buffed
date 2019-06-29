@@ -78,20 +78,41 @@ test("getBuffStatValue method returns the correct BuffStatValue with the correct
     const buffStatValueController = new BuffStatValueController();
 
     const req: any = {
-        body: {
+        params: {
             buff: selectedBuffStatValueDoc.buff,
             stat: selectedBuffStatValueDoc.stat
         }
     }
 
     const resMockJsonFunction = jest.fn();
+    const next = jest.fn();
 
     const res: any = {
         json: resMockJsonFunction,
         send: jest.fn()
     }
 
-    await buffStatValueController.getBuffStatValue(req, res);
+    await buffStatValueController.getBuffStatValue(req, res, next);
 
     expect(resMockJsonFunction).toBeCalledWith(selectedBuffStatValueDoc.toJSON());
+});
+
+test("Sending a request with empty params to getBuffStatValue sends an error", async () => {
+    
+    const buffStatValueController = new BuffStatValueController();
+
+    const req: any = {
+        params: []
+    }
+
+    const next = jest.fn();
+    const sendFunction = jest.fn();
+
+    const res: any = {
+        send: sendFunction
+    }
+
+    await buffStatValueController.getBuffStatValue(req, res, next);
+
+    expect(next).toBeCalled();
 });
