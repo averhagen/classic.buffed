@@ -118,14 +118,15 @@ test("Sending a request with empty params to getBuffStatValue sends an error", a
         params: []
     }
 
-    const sendFunction = jest.fn();
+    const jsonFunction = jest.fn();
     const res: any = {
-        send: sendFunction
+        json: jsonFunction
     }
 
     const buffStatValueController = new BuffStatValueController();
     const next = jest.fn();
     await buffStatValueController.getBuffStatValue(req, res, next);
 
+    expect(jsonFunction).not.toBeCalled();
     expect(next).toBeCalled();
 });
