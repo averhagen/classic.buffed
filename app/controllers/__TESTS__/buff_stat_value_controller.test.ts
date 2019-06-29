@@ -99,19 +99,17 @@ test("getBuffStatValue method returns the correct BuffStatValue with the correct
 
 test("Sending a request with empty params to getBuffStatValue sends an error", async () => {
     
-    const buffStatValueController = new BuffStatValueController();
-
     const req: any = {
         params: []
     }
 
-    const next = jest.fn();
     const sendFunction = jest.fn();
-
     const res: any = {
         send: sendFunction
     }
 
+    const buffStatValueController = new BuffStatValueController();
+    const next = jest.fn();
     await buffStatValueController.getBuffStatValue(req, res, next);
 
     expect(next).toBeCalled();
