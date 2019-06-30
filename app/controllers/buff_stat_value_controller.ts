@@ -11,8 +11,10 @@ export class BuffStatValueController {
         };
 
         try {
-            const buffStatValueDoc = await new BuffStatValue(valuesForNewBuffStatValue).save();
-            res.json(buffStatValueDoc);
+            if(valuesForNewBuffStatValue.buff && valuesForNewBuffStatValue.stat && valuesForNewBuffStatValue.value) {
+                const buffStatValueDoc = await new BuffStatValue(valuesForNewBuffStatValue).save();
+                res.json(buffStatValueDoc);
+            }
         } catch (error) {
             res.send(error);
             console.log(error);
