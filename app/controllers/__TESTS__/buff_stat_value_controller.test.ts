@@ -51,6 +51,8 @@ test("Sending a request with empty params to addBuffStatValue function causes an
     const next = jest.fn();
 
     await new BuffStatValueController().addNewBuffStatValue(emptyRequest, res, next);
+
+    expect(res.json).not.toBeCalled();
 });
 
 test("getBuffStatValue method returns the correct BuffStatValue with the correct params.", async () => {
