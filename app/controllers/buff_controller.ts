@@ -1,9 +1,9 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 import { BuffModel } from "../models/buff";
 
 export class BuffController {
 
-    public async createBuff(req: Request, res: Response) {
+    public async createBuff(req: Request, res: Response, next: NextFunction) {
         console.log("Received buff post request: " + req.url);
         const buffValues = this.extractBuffValuesFromReq(req);
 

@@ -5,7 +5,7 @@ import { BuffController } from "../buff_controller";
 beforeAll(startConnectionToTestDB);
 afterAll(stopConnectionToTestDB);
 
-test("Using the buff controller to make a buff creates a buff with the correct values.", async () => {
+test("BuffController.createBuff() creates a buff when sent a request with valid params.", async () => {
 
     const buffName: string = "Buff Controller Buff";
     const buffRank: number = 2;
@@ -26,10 +26,11 @@ test("Using the buff controller to make a buff creates a buff with the correct v
 
     const buffController = new BuffController();
 
-    await buffController.createBuff(req, res);
+    const next = jest.fn();
+    await buffController.createBuff(req, res, next);
 
     expect(res.json).toBeCalled();
-    expect(res.send).not.toBeCalled();
+    expect(next).not.toBeCalled();
 
     const createdBuff: any = await BuffModel.findOne({ name: buffName, rank: buffRank }).exec();
     expect(createdBuff.name).toEqual(buffName);
