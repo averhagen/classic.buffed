@@ -4,20 +4,20 @@ import { BuffStatValue } from '../models/buff_stat_value';
 export class BuffStatValueController {
 
     public async addNewBuffStatValue(req: Request, res: Response, next: NextFunction) {
-        const valuesForNewBuffStatValue = {
-            buff: req.body["buff"],
-            stat: req.body["stat"],
-            value: req.body["value"]
-        };
-
         try {
-            if(valuesForNewBuffStatValue.buff && valuesForNewBuffStatValue.stat && valuesForNewBuffStatValue.value) {
+            const valuesForNewBuffStatValue = {
+                buff: req.query["buff"],
+                stat: req.query["stat"],
+                value: req.query["value"]
+            };
+            
+            if (valuesForNewBuffStatValue.buff && valuesForNewBuffStatValue.stat && valuesForNewBuffStatValue.value) {
                 const buffStatValueDoc = await new BuffStatValue(valuesForNewBuffStatValue).save();
-                res.json(buffStatValueDoc);
+                return res.json(buffStatValueDoc);
             }
+            throw new Error("Unable to create BuffStatValue with given params.");
         } catch (error) {
-            res.send(error);
-            console.log(error);
+            return next(error);
         }
     }
 
@@ -35,7 +35,7 @@ export class BuffStatValueController {
                 }
             }
 
-            throw new Error("Unable to find document with given parameters.");
+            throw new Error("Unable to find BuffStatValue with given parameters.");
         } catch (error) {
             return next(error);
         }

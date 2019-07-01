@@ -7,7 +7,7 @@ import { BuffStatValueController } from "../buff_stat_value_controller";
 beforeAll(startConnectionToTestDB);
 afterAll(stopConnectionToTestDB);
 
-test("addNewBuffStatValue() creates the correct buffStatValue when sent a request with valid params", async () => {
+test("addNewBuffStatValue() creates the correct buffStatValue when sent a request with valid query params", async () => {
     const buffValues = {
         name: "buff_stat_value buff name test",
         rank: 0
@@ -21,7 +21,7 @@ test("addNewBuffStatValue() creates the correct buffStatValue when sent a reques
     const statDoc = await new statModel(statValues).save();
 
     const req: any = {
-        body: {
+        query: {
             buff: buffDoc._id,
             stat: statDoc._id,
             value: 20
@@ -33,9 +33,12 @@ test("addNewBuffStatValue() creates the correct buffStatValue when sent a reques
         send: jest.fn()
     }
 
-    await new BuffStatValueController().addNewBuffStatValue(req, res, () => {});
+    const next = jest.fn();
+
+    await new BuffStatValueController().addNewBuffStatValue(req, res, next);
 
     expect(res.json).toBeCalled();
+    expect(next).not.toBeCalled();
 });
 
 test("addBuffStatValue() responds with an error when sent a request with empty params", async () => {
