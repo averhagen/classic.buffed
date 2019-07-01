@@ -8,7 +8,7 @@ export class BuffController {
 
         try {
             const buffDocument = await new BuffModel(req.query).save();
-            return res.json(buffDocument);
+            return res.json(buffDocument.toJSON());
         } catch (error) {
             return next(error);
         }
@@ -18,8 +18,13 @@ export class BuffController {
         console.log("Received buff get request: " + req.url);
 
         try {
-            const foundBuffDocuments = await BuffModel.findOne(req.query).exec();
-            return res.json(foundBuffDocuments);
+            if (req.query.name && req.query.rank) {
+                const foundBuffDocuments = await BuffModel.findOne(req.query).exec();
+                if (foundBuffDocuments != null) {
+                    return res.json(foundBuffDocuments.toJSON());
+                }
+            }
+            throw new Error("Unable to find Buff with given params.");
         } catch (error) {
             return next(error);
         }

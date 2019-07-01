@@ -131,3 +131,22 @@ test("BuffController.getBuff() returns the correct buff when sent valid query pa
     expect(res.json).not.toBeCalledWith(expect.objectContaining(falseBuffValues));
     expect(next).not.toBeCalled();
 });
+
+test("BuffController.getBuff() returns an error when sent invalid query params.", async () => {
+
+    const req: any = {
+        query: {
+        }
+    };
+
+    const res: any = {
+        json: jest.fn()
+    };
+
+    const next = jest.fn();
+
+    await new BuffController().getBuffs(req, res, next);
+
+    expect(res.json).not.toBeCalled();
+    expect(next).toBeCalled();
+});
