@@ -5,9 +5,30 @@ import { StatController } from "../stat_controller";
 beforeAll(startConnectionToTestDB);
 afterAll(stopConnectionToTestDB);
 
-test("Creating a stat makes the correct stat based on the request", async () => {
+test("StatController.createStat() returns an error when sent a request with invalid query params.", async () => {
 
-    const statName: string = "Spirit";
+    const invalidStatName = "";
+    const req: any = {
+        query: {
+            name: invalidStatName
+        }
+    };
+
+    const res: any = {
+        json: jest.fn(),
+    };
+
+    const next = jest.fn();
+
+    await new StatController().createStat(req, res, next);
+    expect(res.json).not.toBeCalled();
+    expect(next).toBeCalled();
+});
+
+
+test("StatController.createStat() makes the correct stat when sent a request with valid params.", async () => {
+
+    const statName: string = "StatController.createStat() valid stat name yhzxysadf";
 
     const req: any = {
         query: {
@@ -15,20 +36,19 @@ test("Creating a stat makes the correct stat based on the request", async () => 
         },
     };
 
+    expect(await statModel.findOne(req.query)).toBeNull();
+
     const res: any = {
         json: jest.fn(),
         send: jest.fn()
     };
 
-    expect(await statModel.findOne()).toBeNull();
+    const next = jest.fn();
+    await new StatController().createStat(req, res, next);
 
-    const statController = new StatController();
+    expect(res.json).toBeCalledWith(expect.objectContaining(req.query));
+    expect(next).not.toBeCalled();
 
-    await statController.createStat(req, res);
-
-    expect(res.json).toBeCalled();
-    expect(res.send).not.toBeCalled();
-
-    const createdStat: any = await statModel.findOne().exec();
+    const createdStat: any = await statModel.findOne(req.query).exec();
     expect(createdStat.name).toEqual(statName);
 });
