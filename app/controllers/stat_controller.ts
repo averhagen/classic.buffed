@@ -1,18 +1,16 @@
-import mongoose = require("mongoose");
-import { Request, Response } from "express";
-import { statSchema } from "../models/stat";
-
-const StatModel = mongoose.model('stat', statSchema);
+import { Request, Response, NextFunction } from "express";
+import { statModel } from "../models/stat";
 
 export class StatController {
 
-    public addNewStat(req: Request, res: Response) {
-        const newStat = new StatModel({ name: req.query["name"] });
-        newStat.save((err, contact) => {
-            if (err) {
-                res.send(err);
-            }
-            res.json(contact);
-        })
+    public async createStat(req: Request, res: Response, next: NextFunction) {
+        console.log("Received stat post request: " + req.url);
+
+        try {
+            const statDocument = await new statModel(req.query).save();
+            return res.json(statDocument.toJSON());
+        } catch (error) {
+            return next(error);
+        }
     }
 }

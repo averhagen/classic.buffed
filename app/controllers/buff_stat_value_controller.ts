@@ -1,31 +1,33 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import { BuffStatValue } from '../models/buff_stat_value';
 
 export class BuffStatValueController {
 
-    public addNewBuffStatValue(req: Request, res: Response) {
-        const newStatValue = new BuffStatValue({
-            buff: req.body["buff"],
-            stat: req.body["stat"],
-            value: req.body["value"]
-        });
-        newStatValue.save((err, contact) => {
-            if (err) {
-                res.send(err);
+    public async addNewBuffStatValue(req: Request, res: Response, next: NextFunction) {
+        try {
+            if (req.query.buff && req.query.stat && req.query.value) {
+                const buffStatValueDoc = await new BuffStatValue(req.query).save();
+                return res.json(buffStatValueDoc.toJSON());
             }
-            res.json(contact);
-        })
+            throw new Error("Unable to create BuffStatValue with given params.");
+        } catch (error) {
+            return next(error);
+        }
     }
 
-    public getBuffStatValue(req: Request, res: Response) {
-        BuffStatValue.findOne().and([
-            { buff: req.body["buff"] },
-            { stat: req.body["stat"] }
-        ]).populate('buff').populate('stat').exec((err, buffStatValue) => {
-            if (err) {
-                res.send(err);
+    public async getBuffStatValue(req: Request, res: Response, next: NextFunction) {
+        console.log("Received getBuffStatValue request");
+        try {
+            if (req.query.buff && req.query.stat) {
+                const foundDocument = await BuffStatValue.findOne(req.query).exec();
+                if (foundDocument != null) {
+                    return res.json(foundDocument.toJSON());
+                }
             }
-            res.json(buffStatValue);
-        });
+
+            throw new Error("Unable to find BuffStatValue with given parameters.");
+        } catch (error) {
+            return next(error);
+        }
     }
 }

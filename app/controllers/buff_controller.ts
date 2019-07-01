@@ -1,36 +1,32 @@
-import mongoose = require('mongoose');
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 import { BuffModel } from "../models/buff";
 
 export class BuffController {
 
-    public async createBuff(req: Request, res: Response) {
+    public async createBuff(req: Request, res: Response, next: NextFunction) {
         console.log("Received buff post request: " + req.url);
-        const buffValues = this.extractBuffValuesFromReq(req);
 
         try {
-            const buffDocument = await new BuffModel(buffValues);
-            res.json(buffDocument);
+            const buffDocument = await new BuffModel(req.query).save();
+            return res.json(buffDocument.toJSON());
         } catch (error) {
-            res.send(error);
+            return next(error);
         }
     }
 
-    private extractBuffValuesFromReq(req: Request): any {
-        return {
-            name: req.query["name"],
-            rank: req.query["rank"]
-        }
-    }
-
-    public async getBuffs(req: Request, res: Response) {
+    public async getBuffs(req: Request, res: Response, next: NextFunction) {
         console.log("Received buff get request: " + req.url);
 
         try {
-            const foundBuffDocuments = await BuffModel.find({}).exec();
-            res.json(foundBuffDocuments);
+            if (req.query.name && req.query.rank) {
+                const foundBuffDocuments = await BuffModel.findOne(req.query).exec();
+                if (foundBuffDocuments != null) {
+                    return res.json(foundBuffDocuments.toJSON());
+                }
+            }
+            throw new Error("Unable to find Buff with given params.");
         } catch (error) {
-            res.send(error);
+            return next(error);
         }
     }
 }
