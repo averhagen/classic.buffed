@@ -53,6 +53,7 @@ test("Sending a request with empty params to addBuffStatValue function causes an
     await new BuffStatValueController().addNewBuffStatValue(emptyRequest, res, next);
 
     expect(res.json).not.toBeCalled();
+    expect(next).toBeCalled();
 });
 
 test("getBuffStatValue method returns the correct BuffStatValue with the correct params.", async () => {
