@@ -7,7 +7,7 @@ import { BuffStatValueController } from "../buff_stat_value_controller";
 beforeAll(startConnectionToTestDB);
 afterAll(stopConnectionToTestDB);
 
-test("addNewBuffStatValue method creates the correct buffStatValue.", async () => {
+test("addNewBuffStatValue() creates the correct buffStatValue when sent a request with valid params", async () => {
     const buffValues = {
         name: "buff_stat_value buff name test",
         rank: 0
@@ -38,7 +38,7 @@ test("addNewBuffStatValue method creates the correct buffStatValue.", async () =
     expect(res.json).toBeCalled();
 });
 
-test("Sending a request with empty params to addBuffStatValue function causes an error", async () => {
+test("addBuffStatValue() responds with an error when sent a request with empty params", async () => {
 
     const emptyRequest: any = {
         body: []
@@ -56,7 +56,7 @@ test("Sending a request with empty params to addBuffStatValue function causes an
     expect(next).toBeCalled();
 });
 
-test("getBuffStatValue method returns the correct BuffStatValue with the correct params.", async () => {
+test("getBuffStatValue() returns the correct BuffStatValue when sent a request with valid params.", async () => {
 
     const timeSeed = Date.now();
 
@@ -115,7 +115,7 @@ test("getBuffStatValue method returns the correct BuffStatValue with the correct
     expect(resMockJsonFunction).toBeCalledWith(selectedBuffStatValueDoc.toJSON());
 });
 
-test("Sending a request with empty params to getBuffStatValue sends an error", async () => {
+test("getBuffStatValue() responds with an error when sent a request with empty params", async () => {
 
     const req: any = {
         params: []
