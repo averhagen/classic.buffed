@@ -24,12 +24,8 @@ export class BuffStatValueController {
     public async getBuffStatValue(req: Request, res: Response, next: NextFunction) {
         console.log("Received getBuffStatValue request");
         try {
-            const buffValue = req.params["buff"];
-            const statValue = req.params["stat"];
-
-            if (buffValue && statValue) {
-                const query = { buff: buffValue, stat: statValue };
-                const foundDocument = await BuffStatValue.findOne(query).exec();
+            if (req.query.buff && req.query.stat) {
+                const foundDocument = await BuffStatValue.findOne(req.query).exec();
                 if (foundDocument != null) {
                     return res.json(foundDocument.toJSON());
                 }
