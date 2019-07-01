@@ -50,7 +50,7 @@ test("BuffController.createBuff() returns an error when sent a request with empt
 
     const validBuffRank = 22;
     const emptyBuffName = undefined;
-    
+
     const req: any = {
         query: {
             rank: validBuffRank,
@@ -81,8 +81,7 @@ test("BuffController.createBuff() creates a buff when sent a request with valid 
     };
 
     const res: any = {
-        json: jest.fn(),
-        send: jest.fn()
+        json: jest.fn()
     };
 
     expect(await BuffModel.findOne({ name: buffName, rank: buffRank }).exec()).toBeNull();
@@ -100,15 +99,15 @@ test("BuffController.createBuff() creates a buff when sent a request with valid 
     expect(createdBuff.rank).toEqual(buffRank);
 });
 
-test("That using the getBuff method of Buff returns the correct buff", async () => {
+test("BuffController.getBuff() returns the correct buff when sent valid query params", async () => {
 
     const buffValues = {
-        name: "Get buff test name",
+        name: "BuffController.getBuff() intented test buff name",
         rank: 3
     };
 
     const falseBuffValues = {
-        name: "Bad Value",
+        name: "BuffController.getBuff() false test buff name",
         rank: 6
     }
 
@@ -125,8 +124,10 @@ test("That using the getBuff method of Buff returns the correct buff", async () 
     };
 
     await new BuffModel(buffValues).save();
-    await new BuffController().getBuffs(req, res);
+    const next = jest.fn();
+    await new BuffController().getBuffs(req, res, next);
 
     expect(res.json).toBeCalledWith(expect.objectContaining(buffValues));
     expect(res.json).not.toBeCalledWith(expect.objectContaining(falseBuffValues));
+    expect(next).not.toBeCalled();
 });

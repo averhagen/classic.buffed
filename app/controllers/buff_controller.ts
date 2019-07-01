@@ -14,14 +14,14 @@ export class BuffController {
         }
     }
 
-    public async getBuffs(req: Request, res: Response) {
+    public async getBuffs(req: Request, res: Response, next: NextFunction) {
         console.log("Received buff get request: " + req.url);
 
         try {
             const foundBuffDocuments = await BuffModel.findOne(req.query).exec();
-            res.json(foundBuffDocuments);
+            return res.json(foundBuffDocuments);
         } catch (error) {
-            res.send(error);
+            return next(error);
         }
     }
 }
