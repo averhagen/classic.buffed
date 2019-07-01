@@ -5,6 +5,69 @@ import { BuffController } from "../buff_controller";
 beforeAll(startConnectionToTestDB);
 afterAll(stopConnectionToTestDB);
 
+test("BuffController.createBuff() returns an error when sent a request with empty query params.", async () => {
+
+    const emptyQueryParams = {};
+
+    const req: any = {
+        query: emptyQueryParams
+    };
+
+    const res: any = {
+        json: jest.fn()
+    };
+
+    const next = jest.fn();
+    await new BuffController().createBuff(req, res, next);
+    expect(next).toBeCalled();
+    expect(res.json).not.toBeCalled();
+});
+
+
+test("BuffController.createBuff() returns an error when sent a request with invalid rank value.", async () => {
+
+    const invalidBuffRank = "Invalid rank value with random text: asdfnzxcvoyqwe90";
+    const validBuffName = "Valid name value with random text: as;dlnzxqoeui0841";
+
+    const req: any = {
+        query: {
+            rank: invalidBuffRank,
+            name: validBuffName
+        },
+    };
+
+    const res: any = {
+        json: jest.fn()
+    };
+
+    const next = jest.fn();
+    await new BuffController().createBuff(req, res, next);
+    expect(next).toBeCalled();
+    expect(res.json).not.toBeCalled();
+});
+
+test("BuffController.createBuff() returns an error when sent a request with empty buff name.", async () => {
+
+    const validBuffRank = 22;
+    const emptyBuffName = undefined;
+    
+    const req: any = {
+        query: {
+            rank: validBuffRank,
+            name: emptyBuffName
+        },
+    };
+
+    const res: any = {
+        json: jest.fn()
+    };
+
+    const next = jest.fn();
+    await new BuffController().createBuff(req, res, next);
+    expect(next).toBeCalled();
+    expect(res.json).not.toBeCalled();
+});
+
 test("BuffController.createBuff() creates a buff when sent a request with valid params.", async () => {
 
     const buffName: string = "Buff Controller Buff";

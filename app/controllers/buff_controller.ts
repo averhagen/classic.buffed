@@ -5,20 +5,12 @@ export class BuffController {
 
     public async createBuff(req: Request, res: Response, next: NextFunction) {
         console.log("Received buff post request: " + req.url);
-        const buffValues = this.extractBuffValuesFromReq(req);
 
         try {
-            const buffDocument = await new BuffModel(buffValues).save();
-            res.json(buffDocument);
+            const buffDocument = await new BuffModel(req.query).save();
+            return res.json(buffDocument);
         } catch (error) {
-            res.send(error);
-        }
-    }
-
-    private extractBuffValuesFromReq(req: Request): any {
-        return {
-            name: req.query["name"],
-            rank: req.query["rank"]
+            return next(error);
         }
     }
 
