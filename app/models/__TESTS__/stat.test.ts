@@ -12,9 +12,23 @@ test("StatDocument.save() throws an error when trying to save a stat document wi
     let thrownError;
     try {
         await new statModel({}).save();
-    } catch(error) {
+    } catch (error) {
         thrownError = error;
     }
     expect(thrownError).not.toBeNull();
     expect(thrownError).toBeInstanceOf(mongoose.Error.ValidationError);
+});
+
+test("StatDocument.save() saves a document correctly and doesn't throw an error.", async () => {
+    const statName: String = "Fake stat name for stat model test random text: asd;lkfh1084";
+    const statValues = { name: statName };
+
+    let thrownError = null;
+    try {
+        const savedStat = await new statModel(statValues).save();
+        expect(savedStat.name).toEqual(statValues.name);
+    } catch (error) {
+        thrownError = error;
+    }
+    expect(thrownError).toBeNull();
 });
