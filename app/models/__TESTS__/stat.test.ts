@@ -8,7 +8,7 @@ afterAll(async () => { await connection_utils.stopConnectionToTestDB(); });
 
 connection_utils.testConnectionIsValid();
 
-test("StatDocument.save() throws an error when trying to save a stat document with values.", async () => {
+test("StatDocument.save() throws an error when trying to save a stat document without values.", async () => {
     let thrownError;
     try {
         await new statModel({}).save();
