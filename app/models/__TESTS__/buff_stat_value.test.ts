@@ -37,3 +37,20 @@ test("BuffStatValue.save() fails when trying to save a BuffStatValue without a v
 
     expect(errorThrown).toBe(true);
 });
+
+test("BuffStatValue.save() fails when trying to save a BuffStatValue without a stat.", async () => {
+    const buffValues = { name: "buff_stat_value.test #3 fake buff name", rank: 32 };
+    const mockBuff = await new BuffModel(buffValues).save();
+
+    const mockValue = 23;
+
+    let errorThrown = false;
+
+    try {
+        await new BuffStatValue({ buff: mockBuff, value: mockValue }).save();
+    } catch (error) {
+        errorThrown = true;
+    }
+
+    expect(errorThrown).toBe(true);
+});

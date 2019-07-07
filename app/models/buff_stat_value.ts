@@ -5,7 +5,7 @@ import { statModel } from './stat';
 const collectionName: string = "buff_stat_value";
 const valueFieldOptions = { type: Number, required: true };
 const buffFieldOptions = { type: mongoose.Schema.Types.ObjectId, ref: BuffModel.modelName, required: true };
-const statFieldOptions = { type: mongoose.Schema.Types.ObjectId, ref: statModel.modelName };
+const statFieldOptions = { type: mongoose.Schema.Types.ObjectId, ref: statModel.modelName, required: true };
 
 interface BuffStatValueDocument extends mongoose.Document {
     value: typeof valueFieldOptions.type,
