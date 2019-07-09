@@ -9,6 +9,12 @@ import { BuffStatValueController } from './controllers/buff_stat_value_controlle
 const app: express.Application = express();
 app.use(express.json());
 
+// Set the path where all the view files are stored.
+app.set('views', './views');
+
+// Set the templating engine used to create views.
+app.set('view engine', 'pug');
+
 app.get('/', function (req, res) {
   res.send('Hello World!');
 });
