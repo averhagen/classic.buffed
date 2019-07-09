@@ -1,6 +1,7 @@
 import express = require('express');
 // Connect to mongo database via import side effects.
 import('./data_connection');
+import { BuffModel } from './models/buff';
 import { BuffController } from './controllers/buff_controller';
 import { StatController } from './controllers/stat_controller';
 import { BuffStatValueController } from './controllers/buff_stat_value_controller'
@@ -15,13 +16,18 @@ app.set('views', './views');
 // Set the templating engine used to create views.
 app.set('view engine', 'pug');
 
-app.get('/', function (req, res) {
-  res.send('Hello World!');
-});
+app.get('/index', async function (req, res) {
+  try {
+    const buffs = await BuffModel.find().exec();
+    res.render('index', { title: "Classic.Buffed", buffs: buffs });
+  } catch (error) {
+    console.log(error);
+  }
+})
 
 // Controller and methods used for the Buff api
 const buffController: BuffController = new BuffController();
-app.route('/buff')
+app.route('/buffs')
   .get(buffController.getBuffs.bind(buffController))
   .post(buffController.createBuff.bind(buffController));
 
