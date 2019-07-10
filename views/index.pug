@@ -2,6 +2,31 @@ html
   head
     title= title
   body
-    ul
-      each val in buffs
-        li= val.name + " " + val.rank
+    div Container Div
+      div
+        h3 Pre Buffed Stats
+        table
+          each stat in stats
+            tr
+              td
+                label(for=stat.name) #{ stat.name + ": "}
+              td
+                input(id=stat.name type="text" size="8")
+      div
+        h3 Buffs
+          table
+            each buff in buffs
+              tr
+                td
+                  input(id=buff.name type="checkbox")
+                td
+                  label(for=buff.name) #{ buff.name }
+                td #{ "Rank: " + buff.rank }
+               
+      div
+        h3 Post Buff Stats
+        table
+          each stat in stats
+            tr
+              td #{ stat.name + ": "}
+              td After Buff Value
