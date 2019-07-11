@@ -4,8 +4,7 @@
   "description": "A tool that enables classic wow players to build buffs and to view character stats after buffs are applied.",
   "main": "index.js",
   "scripts": {
-    "predev": "tsc",
-    "dev": "node ./build/app.js",
+    "dev": "ts-node-dev ./app/app.ts",
     "test": "jest",
     "tsc": "tsc"
   },
