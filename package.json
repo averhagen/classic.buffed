@@ -4,8 +4,7 @@
   "description": "A tool that enables classic wow players to build buffs and to view character stats after buffs are applied.",
   "main": "index.js",
   "scripts": {
-    "predev": "tsc",
-    "dev": "node ./build/app.js",
+    "dev": "ts-node-dev ./app/app.ts",
     "test": "jest",
     "tsc": "tsc"
   },
@@ -21,18 +20,18 @@
   "homepage": "https://github.com/averhagen/classic.buffed#readme",
   "dependencies": {
     "@types/express": "^4.17.0",
-    "@types/mongoose": "^5.5.7",
+    "@types/mongoose": "^5.5.8",
     "@types/pug": "^2.0.4",
     "express": "^4.17.1",
-    "jest-express": "^1.10.1",
-    "mongodb-memory-server": "^5.1.5",
-    "mongoose": "^5.6.2",
+    "mongoose": "^5.6.4",
     "pug": "^2.0.4",
-    "typescript": "^3.5.2"
+    "ts-node-dev": "^1.0.0-pre.40",
+    "typescript": "^3.5.3"
   },
   "devDependencies": {
     "@types/jest": "^24.0.15",
     "jest": "^24.8.0",
+    "mongodb-memory-server": "^5.1.5",
     "ts-jest": "^24.0.2"
   }
 }
