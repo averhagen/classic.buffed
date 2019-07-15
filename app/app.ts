@@ -1,8 +1,6 @@
 import express = require('express');
 // Connect to mongo database via import side effects.
 import('./data_connection');
-import { BuffStatValueController } from './controllers/buff_stat_value_controller';
-import { StatController } from './controllers/stat_controller';
 import { BuffModel } from './models/buff';
 import { statModel } from './models/stat';
 import { restRouter } from './routes/rest';
@@ -27,19 +25,7 @@ app.get('/index', async function (req, res) {
   }
 })
 
-// Controller and methods used for the Buff api
 app.use('/rest', restRouter);
-
-// Controller and routed methods used for Stat API
-const statController: StatController = new StatController();
-app.route('/stat')
-  .post(statController.createStat.bind(statController));
-
-// Controller and routed methods used for BuffStatValue API
-const buffStatValueController: BuffStatValueController = new BuffStatValueController();
-app.route('/buffstatvalue')
-  .get(buffStatValueController.getBuffStatValue)
-  .post(buffStatValueController.addNewBuffStatValue);
 
 // Start app listening on port 3000
 app.listen(3000, function () {
