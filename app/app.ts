@@ -4,6 +4,8 @@ import('./data_connection');
 import { BuffModel } from './models/buff';
 import { statModel } from './models/stat';
 import { restRouter } from './routes/rest';
+import { buffRouter } from './routes/buffs';
+import { statRouter } from './routes/stats';
 
 // Create a new express application instance
 const app: express.Application = express();
@@ -26,6 +28,8 @@ app.get('/index', async function (req, res) {
 })
 
 app.use('/rest', restRouter);
+app.use('/buffs', buffRouter);
+app.use('/stats', statRouter);
 
 // Start app listening on port 3000
 app.listen(3000, function () {
