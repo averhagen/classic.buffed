@@ -20,7 +20,7 @@ test("StatDocument.save() throws an error when trying to save a stat document wi
 });
 
 test("StatDocument.save() saves a document correctly and doesn't throw an error.", async () => {
-    const statName: String = "Fake stat name for stat model test random text: asd;lkfh1084";
+    const statName: string = "Fake stat name for stat model test random text: asd;lkfh1084";
     const statValues = { name: statName };
 
     let thrownError = null;

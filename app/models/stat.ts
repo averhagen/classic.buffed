@@ -4,7 +4,7 @@ const collectionName: string = "stat";
 const nameFieldOptions = { type: String, required: true };
 
 interface StatDocument extends mongoose.Document {
-    name: typeof nameFieldOptions.type
+    name: string
 }
 
 const statSchema = new mongoose.Schema(

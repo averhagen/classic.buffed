@@ -5,13 +5,13 @@ const nameFieldOptions = { type: String, required: true };
 const rankFieldOptions = { type: Number, required: true };
 
 interface BuffDocument extends mongoose.Document {
-    name: typeof nameFieldOptions.type,
-    rank: typeof rankFieldOptions.type
+    name: string,
+    rank: number
 }
 
 const buffSchema = new mongoose.Schema({
     name: nameFieldOptions,
-    rank: rankFieldOptions,
+    rank: rankFieldOptions
 }, { collection: buffCollectionName });
 
 const BuffModel = mongoose.model<BuffDocument>(buffCollectionName, buffSchema);
