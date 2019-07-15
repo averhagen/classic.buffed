@@ -11,7 +11,7 @@ beforeAll(async () => {
     // Create and save fake buff data.
     const mockBuffDocuments: BuffDocument[] = [];
     for (let i = 0; i < 10; i++) {
-        const mockBuffName: String = "getBuffStatValue mock buff name " + timeSeed + i;
+        const mockBuffName: string = "getBuffStatValue mock buff name " + timeSeed + i;
         for (let j = 0; j < 5; j++) {
             mockBuffDocuments.push(await new BuffModel({ name: mockBuffName, rank: j }).save());
         }
@@ -20,7 +20,7 @@ beforeAll(async () => {
     //Create and save fake stat data.
     const mockStatDocuments: StatDocument[] = [];
     for (let i = 0; i < 10; i++) {
-        const mockBuffName: String = "getBuffStatValue mock stat name " + timeSeed + i;
+        const mockBuffName: string = "getBuffStatValue mock stat name " + timeSeed + i;
         mockStatDocuments.push(await new statModel({ name: mockBuffName }).save());
     }
 

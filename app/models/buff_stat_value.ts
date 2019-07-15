@@ -1,6 +1,6 @@
 import mongoose = require('mongoose');
-import { BuffModel } from './buff';
-import { statModel } from './stat';
+import { BuffModel, BuffDocument } from './buff';
+import { statModel, StatDocument } from './stat';
 
 const collectionName: string = "buff_stat_value";
 const valueFieldOptions = { type: Number, required: true };
@@ -8,9 +8,9 @@ const buffFieldOptions = { type: mongoose.Schema.Types.ObjectId, ref: BuffModel.
 const statFieldOptions = { type: mongoose.Schema.Types.ObjectId, ref: statModel.modelName, required: true };
 
 interface BuffStatValueDocument extends mongoose.Document {
-    value: typeof valueFieldOptions.type,
-    buff: typeof buffFieldOptions.type,
-    stat: typeof statFieldOptions.type
+    value: number,
+    buff: BuffDocument,
+    stat: StatDocument
 }
 
 const BuffStateValueSchema = new mongoose.Schema({

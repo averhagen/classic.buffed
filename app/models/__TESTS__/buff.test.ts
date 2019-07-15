@@ -26,8 +26,8 @@ test("That saving a Buff without a Rank or Name throws an error", async () => {
 });
 
 test("That valid buff is saved with the proper values.", async () => {
-    const buffName: String = "Divine Spirit";
-    const buffRank: Number = 1;
+    const buffName: string = "Divine Spirit";
+    const buffRank: number = 1;
 
     const docWithBuffValues = { name: buffName, rank: buffRank };
     const savedBuff = await new BuffModel(docWithBuffValues).save();

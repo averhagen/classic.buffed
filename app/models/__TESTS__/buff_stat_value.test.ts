@@ -57,7 +57,7 @@ test("BuffStatValue.save() fails when trying to save a BuffStatValue without a s
 
 test("BuffStatValue.save() fails when trying to save a BuffStatValue without a buff.", async () => {
 
-    const mockValue: Number = 22;
+    const mockValue: number = 22;
 
     const statValues = { name: "BuffStatValue test #4 fake stat name." };
     const mockStat = await new statModel(statValues).save();

@@ -1,7 +1,7 @@
 import mongoose = require("mongoose");
 
 const collectionName: string = "stat";
-const nameFieldOptions = { type: String, required: true };
+const nameFieldOptions = { type: "string", required: true };
 
 interface StatDocument extends mongoose.Document {
     name: typeof nameFieldOptions.type
