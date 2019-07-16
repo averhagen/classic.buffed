@@ -7,7 +7,7 @@ export class BuffController {
         console.log("Received buff post request: " + req.url);
 
         try {
-            const buffDocument = await new BuffModel(req.query).save();
+            const buffDocument = await new BuffModel(req.body).save();
             return res.json(buffDocument.toJSON());
         } catch (error) {
             return next(error);

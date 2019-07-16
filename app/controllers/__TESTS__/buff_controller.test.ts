@@ -68,13 +68,13 @@ test("BuffController.createBuff() returns an error when sent a request with empt
     expect(res.json).not.toBeCalled();
 });
 
-test("BuffController.createBuff() creates a buff when sent a request with valid params.", async () => {
+test("BuffController.createBuff() creates a buff when sent a request with valid body.", async () => {
 
     const buffName: string = "Buff Controller Buff";
     const buffRank: number = 2;
 
     const req: any = {
-        query: {
+        body: {
             name: buffName,
             rank: buffRank
         },
