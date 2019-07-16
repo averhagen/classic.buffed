@@ -35,5 +35,10 @@ export class BuffController {
         const buffs = await BuffModel.find().exec();
         res.render('buffs/view_all_buffs', { buffs: buffs });
     }
+
+    public async renderCreateBuffPage(req: Request, res: Response, next: NextFunction) {
+        console.log("Render Create Buff Page Requested.");
+        res.send("Create Buffs Page");
+    }
 }
 
