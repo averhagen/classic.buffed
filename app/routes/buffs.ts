@@ -1,12 +1,9 @@
 import express = require('express');
-import { BuffModel } from '../models/buff';
+import { BuffController } from '../controllers/buff_controller';
 
 const buffRouter = express.Router();
+const buffController = new BuffController();
 
-buffRouter.get('/', async (req, res, next) => {
-    console.log("buff get called");
-    const buffs = await BuffModel.find().exec();
-    res.render('buffs/view_all_buffs', { buffs: buffs });
-});
+buffRouter.get('/', buffController.renderViewAllBuffsPage);
 
 export { buffRouter };

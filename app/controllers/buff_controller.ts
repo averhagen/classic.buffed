@@ -29,5 +29,11 @@ export class BuffController {
             return next(error);
         }
     }
+
+    public async renderViewAllBuffsPage(req: Request, res: Response, next: NextFunction) {
+        console.log("buff get called");
+        const buffs = await BuffModel.find().exec();
+        res.render('buffs/view_all_buffs', { buffs: buffs });
+    }
 }
 
