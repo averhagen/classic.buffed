@@ -38,7 +38,7 @@ export class BuffController {
 
     public async renderCreateBuffPage(req: Request, res: Response, next: NextFunction) {
         console.log("Render Create Buff Page Requested.");
-        res.send("Create Buffs Page");
+        res.render('buffs/create_buff.pug');
     }
 }
 
