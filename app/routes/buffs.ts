@@ -1,10 +1,9 @@
 import express = require('express');
+import { BuffController } from '../controllers/buff_controller';
 
 const buffRouter = express.Router();
+const buffController = new BuffController();
 
-buffRouter.get('/', async (req, res, next) => {
-    console.log("buff get called");
-    res.send("NOT YET IMPLEMENTED");
-});
+buffRouter.get('/', buffController.renderViewAllBuffsPage);
 
 export { buffRouter };
