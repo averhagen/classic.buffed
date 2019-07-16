@@ -31,7 +31,7 @@ export class BuffController {
     }
 
     public async renderViewAllBuffsPage(req: Request, res: Response, next: NextFunction) {
-        console.log("buff get called");
+        console.log("Render All Buffs Requested.");
         const buffs = await BuffModel.find().exec();
         res.render('buffs/view_all_buffs', { buffs: buffs });
     }
