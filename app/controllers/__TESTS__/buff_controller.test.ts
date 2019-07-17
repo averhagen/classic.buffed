@@ -147,3 +147,11 @@ test("BuffController.getBuff() returns an error when sent invalid query params."
     expect(res.json).not.toBeCalled();
     expect(next).toBeCalled();
 });
+
+test("BuffController.deleteBuff() deletes the appropriate sent in.", async () => {
+    const req: any = {};
+    const res: any = {};
+    const next = jest.fn();
+    
+    await new BuffController().deleteBuff(req, res, next);
+});

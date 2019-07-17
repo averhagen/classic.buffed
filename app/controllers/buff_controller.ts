@@ -14,6 +14,10 @@ export class BuffController {
         }
     }
 
+    public async deleteBuff(req: Request, res: Response, next: NextFunction) {
+
+    }
+
     public async getBuffs(req: Request, res: Response, next: NextFunction) {
         console.log("Received buff get request: " + req.url);
 
