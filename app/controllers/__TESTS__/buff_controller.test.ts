@@ -148,10 +148,26 @@ test("BuffController.getBuff() returns an error when sent invalid query params."
     expect(next).toBeCalled();
 });
 
-test("BuffController.deleteBuff() deletes the appropriate sent in.", async () => {
-    const req: any = {};
-    const res: any = {};
+test("BuffController.deleteBuff() deletes the appropriate buff sent in.", async () => {
+
+    const buffValues = { rank: 1, name: "Buff name for deleteBuff test #1" };
+
+    const createdBuff = await BuffModel.create(buffValues);
+
+    const req: any = {
+        params: { _id: createdBuff.id }
+    };
+    const res: any = { json: jest.fn() };
     const next = jest.fn();
-    
+
+    const findBuff = async () => {
+        return await BuffModel.findOne(buffValues);
+    }
+
+    expect(await findBuff()).not.toBeNull();
+
     await new BuffController().deleteBuff(req, res, next);
+
+    expect(await findBuff()).toBeNull();
+    expect(next).not.toBeCalled();
 });

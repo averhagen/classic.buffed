@@ -15,7 +15,13 @@ export class BuffController {
     }
 
     public async deleteBuff(req: Request, res: Response, next: NextFunction) {
-
+        console.log("Received Buff delete request: " + req.url);
+        try {
+            res.json(await BuffModel.deleteOne(req.params).exec());
+        } catch (error) {
+            console.log(error);
+            next(error);
+        }
     }
 
     public async getBuffs(req: Request, res: Response, next: NextFunction) {
