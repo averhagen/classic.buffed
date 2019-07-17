@@ -68,30 +68,27 @@ test("BuffController.createBuff() returns an error when sent a request with empt
     expect(res.json).not.toBeCalled();
 });
 
-test("BuffController.createBuff() creates a buff when sent a request with valid params.", async () => {
+test("BuffController.createBuff() creates a buff when sent a request with valid body.", async () => {
 
     const buffName: string = "Buff Controller Buff";
     const buffRank: number = 2;
 
     const req: any = {
-        query: {
+        body: {
             name: buffName,
             rank: buffRank
         },
     };
 
-    const res: any = {
-        json: jest.fn()
-    };
-
     expect(await BuffModel.findOne({ name: buffName, rank: buffRank }).exec()).toBeNull();
 
-    const buffController = new BuffController();
-
+    const res: any = {
+        redirect: jest.fn()
+    };
     const next = jest.fn();
-    await buffController.createBuff(req, res, next);
+    await new BuffController().createBuff(req, res, next);
 
-    expect(res.json).toBeCalled();
+    expect(res.redirect).toBeCalled();
     expect(next).not.toBeCalled();
 
     const createdBuff: any = await BuffModel.findOne({ name: buffName, rank: buffRank }).exec();

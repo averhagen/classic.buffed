@@ -7,8 +7,8 @@ export class BuffController {
         console.log("Received buff post request: " + req.url);
 
         try {
-            const buffDocument = await new BuffModel(req.query).save();
-            return res.json(buffDocument.toJSON());
+            await new BuffModel(req.body).save();
+            res.redirect('/buffs');
         } catch (error) {
             return next(error);
         }
@@ -34,6 +34,11 @@ export class BuffController {
         console.log("Render All Buffs Requested.");
         const buffs = await BuffModel.find().exec();
         res.render('buffs/view_all_buffs', { buffs: buffs });
+    }
+
+    public async renderCreateBuffPage(req: Request, res: Response, next: NextFunction) {
+        console.log("Render Create Buff Page Requested.");
+        res.render('buffs/create_buff.pug');
     }
 }
 

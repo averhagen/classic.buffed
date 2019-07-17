@@ -5,5 +5,6 @@ const buffRouter = express.Router();
 const buffController = new BuffController();
 
 buffRouter.get('/', buffController.renderViewAllBuffsPage);
+buffRouter.get('/create', buffController.renderCreateBuffPage);
 
 export { buffRouter };

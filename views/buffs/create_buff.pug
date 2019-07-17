@@ -1,0 +1,14 @@
+h1= "You've reached the create Buffs page."
+
+form(method="POST" action='/rest/buffs')
+    label(for="name") Buff Name:
+    input(type="text", placeholder="Buff Name" name="name")
+    
+    br
+
+    label(for="rank") Buff Rank:
+    input(type="text", placeholder="Buff Rank" name="rank")
+
+    br
+    
+    button(type="Submit") Create
