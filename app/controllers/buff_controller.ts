@@ -17,10 +17,14 @@ export class BuffController {
     public async deleteBuff(req: Request, res: Response, next: NextFunction) {
         console.log("Received Buff delete request: " + req.url);
         try {
-            res.json(await BuffModel.deleteOne(req.params).exec());
+            const deleted = await BuffModel.findOneAndDelete({ _id: req.query._id }).exec();
+            if (deleted == null)
+                throw new Error("Buff not found");
+            else
+                res.send(deleted);
         } catch (error) {
             console.log(error);
-            next(error);
+            return next(error);
         }
     }
 

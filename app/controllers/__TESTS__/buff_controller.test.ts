@@ -153,11 +153,12 @@ test("BuffController.deleteBuff() deletes the appropriate buff sent in.", async 
     const buffValues = { rank: 1, name: "Buff name for deleteBuff test #1" };
 
     const createdBuff = await BuffModel.create(buffValues);
+    console.log("Created Buff with ID: " + createdBuff.id);
 
     const req: any = {
-        params: { _id: createdBuff.id }
+        query: { _id: createdBuff.id }
     };
-    const res: any = { json: jest.fn() };
+    const res: any = { send: jest.fn() };
     const next = jest.fn();
 
     const findBuff = async () => {
@@ -170,4 +171,16 @@ test("BuffController.deleteBuff() deletes the appropriate buff sent in.", async 
 
     expect(await findBuff()).toBeNull();
     expect(next).not.toBeCalled();
+});
+
+test("BuffController.deleteBuff() throws an error when sent empty query.", async () => {
+
+    const req: any = {
+        query: {}
+    };
+    const res: any = { send: jest.fn() };
+    const next = jest.fn();
+
+    await new BuffController().deleteBuff(req, res, next);
+    expect(next).toBeCalled();
 });
