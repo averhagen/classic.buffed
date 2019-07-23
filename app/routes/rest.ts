@@ -9,6 +9,7 @@ const restRouter = express.Router();
 const buffController = new BuffController();
 restRouter.get("/buffs", buffController.getBuffs);
 restRouter.post("/buffs", buffController.createBuff);
+restRouter.delete('/buffs', buffController.deleteBuff);
 
 // REST routes for stats
 const statController = new StatController();
