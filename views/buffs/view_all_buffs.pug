@@ -1,7 +1,7 @@
 h1= 'Buffs'
 
 each buff in buffs
-    form(style="border: 1px solid" method="POST" action="/rest/buffs/delete?_id=" + buff._id )
+    form(style="border: 1px solid" method="POST" action="/buffs/delete?_id=" + buff._id )
         p= buff.name
         p= "Rank: " + buff.rank
         button(type="Submit") Delete
