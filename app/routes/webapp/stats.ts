@@ -5,5 +5,6 @@ const statRouter = express.Router();
 const statController = new WebAppStatController();
 
 statRouter.get('/', statController.renderViewAllStatsPage);
+statRouter.get('/create', statController.renderCreateStatView);
 
 export { statRouter };
