@@ -1,7 +1,7 @@
-import { BuffModel, BuffDocument } from "../../models/buff";
-import { statModel, StatDocument } from "../../models/stat";
-import { BuffStatValue } from "../../models/buff_stat_value";
-import { startConnectionToTestDB, stopConnectionToTestDB } from "../../test_utils/connection_utils";
+import { BuffModel, BuffDocument } from "../../../models/buff";
+import { statModel, StatDocument } from "../../../models/stat";
+import { BuffStatValue } from "../../../models/buff_stat_value";
+import { startConnectionToTestDB, stopConnectionToTestDB } from "../../../test_utils/connection_utils";
 import { BuffStatValueController } from "../buff_stat_value_controller";
 
 beforeAll(async () => {
