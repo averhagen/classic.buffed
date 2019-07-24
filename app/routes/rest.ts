@@ -1,6 +1,6 @@
 import express = require('express');
 import { BuffController } from '../controllers/rest/buff_controller';
-import { StatController } from '../controllers/stat_controller';
+import { StatController } from '../controllers/rest/stat_controller';
 import { BuffStatValueController } from '../controllers/rest/buff_stat_value_controller';
 
 const restRouter = express.Router();

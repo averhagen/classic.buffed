@@ -1,5 +1,5 @@
-import { startConnectionToTestDB, stopConnectionToTestDB } from "../../test_utils/connection_utils";
-import { statModel } from "../../models/stat";
+import { startConnectionToTestDB, stopConnectionToTestDB } from "../../../test_utils/connection_utils";
+import { statModel } from "../../../models/stat";
 import { StatController } from "../stat_controller";
 
 beforeAll(startConnectionToTestDB);

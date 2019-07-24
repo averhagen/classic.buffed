@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { statModel } from "../models/stat";
+import { statModel } from "../../models/stat";
 
 export class StatController {
 
