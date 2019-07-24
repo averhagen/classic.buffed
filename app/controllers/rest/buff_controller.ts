@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { BuffModel } from "../models/buff";
+import { BuffModel } from "../../models/buff";
 
 export class BuffController {
 
@@ -42,17 +42,6 @@ export class BuffController {
         } catch (error) {
             return next(error);
         }
-    }
-
-    public async renderViewAllBuffsPage(req: Request, res: Response, next: NextFunction) {
-        console.log("Render All Buffs Requested.");
-        const buffs = await BuffModel.find().exec();
-        res.render('buffs/view_all_buffs', { buffs: buffs });
-    }
-
-    public async renderCreateBuffPage(req: Request, res: Response, next: NextFunction) {
-        console.log("Render Create Buff Page Requested.");
-        res.render('buffs/create_buff.pug');
     }
 }
 

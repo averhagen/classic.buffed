@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { BuffStatValue } from '../models/buff_stat_value';
+import { BuffStatValue } from '../../models/buff_stat_value';
 
 export class BuffStatValueController {
 
