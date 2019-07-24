@@ -6,6 +6,7 @@ export class WebAppStatController {
 
     public async renderViewAllStatsPage(req: Request, res: Response, next: NextFunction) {
         console.log("Render All Stats Requested.");
-        const buffs = await statModel.find().exec();
+        const stats = await statModel.find().exec();
+        res.render("stats/view_all_stats.pug", { stats: stats });
     }
 }

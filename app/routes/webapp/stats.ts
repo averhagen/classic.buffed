@@ -1,10 +1,9 @@
 import express = require('express');
+import { WebAppStatController } from '../../controllers/webapp/app.stat_controller';
 
 const statRouter = express.Router();
+const statController = new WebAppStatController();
 
-statRouter.get('/', async (req, res, next) => {
-    console.log("get stat called");
-    res.send("NOT YET IMPLEMENTED");
-});
+statRouter.get('/', statController.renderViewAllStatsPage);
 
 export { statRouter };
