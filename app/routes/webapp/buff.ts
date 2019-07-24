@@ -1,5 +1,5 @@
 import express = require('express');
-import { WebAppBuffController } from '../controllers/webapp/app.buff_controller'
+import { WebAppBuffController } from '../../controllers/webapp/app.buff_controller'
 
 const buffRouter = express.Router();
 const webAppBuffController = new WebAppBuffController();

@@ -1,5 +1,5 @@
-import { startConnectionToTestDB, stopConnectionToTestDB } from "../../test_utils/connection_utils";
-import { BuffModel } from "../../models/buff";
+import { startConnectionToTestDB, stopConnectionToTestDB } from "../../../test_utils/connection_utils";
+import { BuffModel } from "../../../models/buff";
 import { BuffController } from "../buff_controller";
 
 beforeAll(startConnectionToTestDB);

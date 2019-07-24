@@ -4,8 +4,8 @@ import('./data_connection');
 import { BuffModel } from './models/buff';
 import { statModel } from './models/stat';
 import { restRouter } from './routes/rest';
-import { buffRouter } from './routes/buffs';
-import { statRouter } from './routes/stats';
+import { buffRouter } from './routes/webapp/buff';
+import { statRouter } from './routes/webapp/stats';
 
 // Create a new express application instance
 const app: express.Application = express();

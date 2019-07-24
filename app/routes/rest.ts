@@ -1,5 +1,5 @@
 import express = require('express');
-import { BuffController } from '../controllers/buff_controller';
+import { BuffController } from '../controllers/rest/buff_controller';
 import { StatController } from '../controllers/stat_controller';
 import { BuffStatValueController } from '../controllers/buff_stat_value_controller';
 

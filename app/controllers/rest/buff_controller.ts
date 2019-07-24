@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { BuffModel } from "../models/buff";
+import { BuffModel } from "../../models/buff";
 
 export class BuffController {
 
