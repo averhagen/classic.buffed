@@ -11,7 +11,18 @@ export class WebAppStatController {
     }
 
     public async renderCreateStatView(req: Request, res: Response, next: NextFunction) {
-        console.log("Render Create Stats View Requeste");
+        console.log("Render Create Stats View Requested.");
         res.render("stats/create_stat.pug");
+    }
+
+    public async createStat(req: Request, res: Response, next: NextFunction) {
+        console.log("Create Stat Requested.");
+        try {
+            await axios.default.post("http://127.0.0.1:3000/rest/stats?name=" + req.body.name);
+            res.redirect("/stats");
+        } catch (error) {
+            console.log(error);
+            res.send(error);
+        }
     }
 }
