@@ -1,1 +1,9 @@
 h1= "Create Stats Page"
+
+form(method="POST" action="/stats/create")
+    label(for="name") Stat Name:
+    input(type="text" name="name" placeholder="Name")
+
+    br
+
+    button(type="Submit") Create
