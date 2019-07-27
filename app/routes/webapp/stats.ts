@@ -6,5 +6,6 @@ const statController = new WebAppStatController();
 
 statRouter.get('/', statController.renderViewAllStatsPage);
 statRouter.get('/create', statController.renderCreateStatView);
+statRouter.post('/create', statController.createStat);
 
 export { statRouter };
