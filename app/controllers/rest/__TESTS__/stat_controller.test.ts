@@ -52,3 +52,38 @@ test("StatController.createStat() makes the correct stat when sent a request wit
     const createdStat: any = await statModel.findOne(req.query).exec();
     expect(createdStat.name).toEqual(statName);
 });
+
+test("StatController.deleteStat() throws an error when sent empty query.", async () => {
+
+    const req: any = {
+        query: {}
+    };
+    const res: any = { send: jest.fn() };
+    const next = jest.fn();
+
+    await new StatController().deleteStat(req, res, next);
+    expect(next).toBeCalled();
+});
+
+test("StatController.deleteStat() deletes the appropriate stat when a request with the correct _id is made.", async () => {
+
+    const statValues = { name: "Stat name for deleted stat mongo test." };
+
+    const createdStat = await statModel.create(statValues);
+    const req: any = {
+        query: { _id: createdStat.id }
+    };
+    const res: any = { send: jest.fn() };
+    const next = jest.fn();
+
+    const findStat = async () => {
+        return await statModel.findOne(statValues);
+    }
+
+    expect(await findStat()).not.toBeNull();
+
+    await new StatController().deleteStat(req, res, next);
+
+    expect(await findStat()).toBeNull();
+    expect(next).not.toBeCalled();
+});
