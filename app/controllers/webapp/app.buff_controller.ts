@@ -37,4 +37,9 @@ export class WebAppBuffController {
             next(error);
         }
     }
+
+    public async editBuff(req: Request, res: Response, next: NextFunction) {
+        console.log("Edit Buff Requested.");
+        res.send("Edit Buff requested.");
+    }
 }
