@@ -25,4 +25,15 @@ export class WebAppStatController {
             res.send(error);
         }
     }
+
+    public async deleteStat(req: Request, res: Response, next: NextFunction) {
+        console.log("Delete Stat Requested.");
+        try {
+            await axios.default.delete("http://127.0.0.1:3000/rest/stats?_id=" + req.query._id);
+            res.redirect("/stats");
+        } catch (error) {
+            console.log(error);
+            res.send(error);
+        }
+    }
 }
