@@ -13,4 +13,19 @@ export class StatController {
             return next(error);
         }
     }
+
+    public async deleteStat(req: Request, res: Response, next: NextFunction) {
+        console.log("Received stat request: " + req.url);
+
+        try {
+            const deleted = await statModel.findOneAndDelete({ _id: req.query._id }).exec();
+            if (deleted == null)
+                throw new Error("Stat not found");
+            else
+                res.send(deleted);
+        } catch (error) {
+            console.log(error);
+            return next(error);
+        }
+    }
 }
