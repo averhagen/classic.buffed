@@ -14,6 +14,10 @@ export class BuffController {
         }
     }
 
+    public async editBuff(req: Request, res: Response, next: NextFunction) {
+        console.log("Recieved Buff edit REST request: " + req.url);
+    }
+
     public async deleteBuff(req: Request, res: Response, next: NextFunction) {
         console.log("Received Buff delete request: " + req.url);
         try {
