@@ -25,4 +25,8 @@ export class WebAppBuffController {
         console.log("Render Create Buff Page Requested.");
         res.render('buffs/create_buff.pug');
     }
+
+    public async renderEditBuffPage(req: Request, res: Response, next: NextFunction) {
+        res.render('buffs/edit_buff.pug');
+    }
 }
