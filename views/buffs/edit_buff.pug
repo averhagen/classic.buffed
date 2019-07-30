@@ -1,3 +1,16 @@
 h1= 'Edit Buff'
 
 h3= buff.name + ' Rank ' + buff.rank
+
+form(method="POST" action='/buffs/edit?_id=' + buff._id)
+    label(for="name") Buff Name:
+    input(type="text", value=buff.name placeholder="Buff Name" name="name")
+    
+    br
+
+    label(for="rank") Buff Rank:
+    input(type="text", value=buff.rank placeholder="Buff Rank" name="rank")
+
+    br
+    
+    button(type="Submit") Save
