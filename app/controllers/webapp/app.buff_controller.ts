@@ -29,7 +29,7 @@ export class WebAppBuffController {
     public async renderEditBuffPage(req: Request, res: Response, next: NextFunction) {
         console.log("Render Edit Buff Page Requested.");
         try {
-            const foundBuff = await BuffModel.find({ _id: req.query._id }).exec();
+            const foundBuff = await BuffModel.findOne({ _id: req.query._id }).exec();
             if (foundBuff == null)
                 throw new Error("Unable to find Buff");
             res.render('buffs/edit_buff.pug', { buff: foundBuff });
