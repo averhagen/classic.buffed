@@ -2,7 +2,10 @@ h1= 'Edit Buff'
 
 h3= buff.name + ' Rank ' + buff.rank
 
-form(method="POST" action='/buffs/edit?_id=' + buff._id)
+form(method="POST" action='/buffs/edit')
+
+    input(type="hidden", value=buff._id name="_id")
+
     label(for="name") Buff Name:
     input(type="text", value=buff.name placeholder="Buff Name" name="name")
     
