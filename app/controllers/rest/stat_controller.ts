@@ -14,6 +14,10 @@ export class StatController {
         }
     }
 
+    public async editStat(req: Request, res: Response, next: NextFunction) {
+        console.log("Received edit stat REST request.");
+    }
+
     public async deleteStat(req: Request, res: Response, next: NextFunction) {
         console.log("Received stat request: " + req.url);
 
