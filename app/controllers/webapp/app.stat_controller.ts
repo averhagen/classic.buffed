@@ -12,7 +12,14 @@ export class WebAppStatController {
 
     public async renderEditStatView(req: Request, res: Response, next: NextFunction) {
         console.log("Render Edit Stats View Requested");
-        res.render("stats/edit_stat.pug");
+        try {
+            const foundStat = await statModel.findOne({ _id: req.query._id }).exec();
+            if (foundStat == null)
+                return res.status(404).send("404 Unable to find stat");
+            return res.render("stats/edit_stat.pug", { stat: foundStat });
+        } catch (error) {
+            return next(error);
+        }
     }
 
     public async renderCreateStatView(req: Request, res: Response, next: NextFunction) {
