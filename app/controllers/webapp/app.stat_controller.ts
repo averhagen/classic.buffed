@@ -10,6 +10,11 @@ export class WebAppStatController {
         res.render("stats/view_all_stats.pug", { stats: stats });
     }
 
+    public async renderEditStatView(req: Request, res: Response, next: NextFunction) {
+        console.log("Render Edit Stats View Requested");
+        res.render("stats/edit_stat.pug");
+    }
+
     public async renderCreateStatView(req: Request, res: Response, next: NextFunction) {
         console.log("Render Create Stats View Requested.");
         res.render("stats/create_stat.pug");
