@@ -230,6 +230,7 @@ test("BuffController.editBuff() appropriately handles edits without a rank value
     expect(changedBuff).not.toBeNull();
 
     if (changedBuff != null) {
+        expect(changedBuff.rank).toEqual(startingBuff.rank);
         expect(changedBuff.name).toEqual(endingBuffValues.name);
         expect(changedBuff._id).toEqual(endingBuffValues._id);
     }
@@ -257,6 +258,7 @@ test("BuffController.editBuff() appropriately handles edits without a name value
     expect(changedBuff).not.toBeNull();
 
     if (changedBuff != null) {
+        expect(changedBuff.name).toEqual(startingBuffValues.name);
         expect(changedBuff.rank).toEqual(endingBuffValues.rank);
         expect(changedBuff._id).toEqual(endingBuffValues._id);
     }
