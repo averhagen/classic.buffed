@@ -18,18 +18,18 @@ export class BuffController {
         console.log("Recieved Buff edit REST request: " + req.url);
         try {
             const foundBuff = await BuffModel.findOne({ _id: req.query._id });
-            if (foundBuff == null)
-                throw new Error("Resource not found");
+            if (foundBuff == null) {
+                res.status(404).send("Buff not found");
+            } else {
+                if (req.query.rank) {
+                    foundBuff.rank = req.query.rank;
+                }
 
-            if (req.query.rank) {
-                foundBuff.rank = req.query.rank;
+                if (req.query.name) {
+                    foundBuff.name = req.query.name;
+                }
+                res.send(await foundBuff.save());
             }
-
-            if (req.query.name) {
-                foundBuff.name = req.query.name;
-            }
-
-            res.send(await foundBuff.save());
         } catch (error) {
             next(error);
         }
