@@ -153,7 +153,6 @@ test("BuffController.deleteBuff() deletes the appropriate buff sent in.", async 
     const buffValues = { rank: 1, name: "Buff name for deleteBuff test #1" };
 
     const createdBuff = await BuffModel.create(buffValues);
-    console.log("Created Buff with ID: " + createdBuff.id);
 
     const req: any = {
         query: { _id: createdBuff.id }
@@ -162,7 +161,7 @@ test("BuffController.deleteBuff() deletes the appropriate buff sent in.", async 
     const next = jest.fn();
 
     const findBuff = async () => {
-        return await BuffModel.findOne(buffValues);
+        return await BuffModel.findOne(createdBuff._id);
     }
 
     expect(await findBuff()).not.toBeNull();
@@ -184,3 +183,110 @@ test("BuffController.deleteBuff() throws an error when sent empty query.", async
     await new BuffController().deleteBuff(req, res, next);
     expect(next).toBeCalled();
 });
+
+test("BuffController.editBuff() changes the values of a buff to the requested values.", async () => {
+    const startingBuffValues = { name: "Starting value for edit buff test", rank: 0 };
+
+    const startingBuff = await BuffModel.create(startingBuffValues);
+
+    const endingBuffValues = { _id: startingBuff._id, name: "Changed Value", rank: startingBuffValues.rank + 1 };
+
+    const req: any = { query: endingBuffValues };
+    const res: any = { send: jest.fn() };
+    const next: any = jest.fn();
+
+    await new BuffController().editBuff(req, res, next);
+
+    expect(next).not.toBeCalled();
+
+    const changedBuff = await BuffModel.findOne({ _id: startingBuff._id }).exec();
+
+    expect(changedBuff).not.toBeNull();
+
+    if (changedBuff != null) {
+        expect(changedBuff.name).toEqual(endingBuffValues.name);
+        expect(changedBuff.rank).toEqual(endingBuffValues.rank);
+        expect(changedBuff._id).toEqual(endingBuffValues._id);
+    }
+});
+
+test("BuffController.editBuff() appropriately handles edits without a rank value.", async () => {
+    const startingBuffValues = { name: "Starting value for edit buff test #2", rank: 0 };
+
+    const startingBuff = await BuffModel.create(startingBuffValues);
+
+    const endingBuffValues = { _id: startingBuff._id, name: "Changed Value" };
+
+    const req: any = { query: endingBuffValues };
+    const res: any = { send: jest.fn() };
+    const next: any = jest.fn();
+
+    await new BuffController().editBuff(req, res, next);
+
+    expect(next).not.toBeCalled();
+
+    const changedBuff = await BuffModel.findOne({ _id: startingBuff._id }).exec();
+
+    expect(changedBuff).not.toBeNull();
+
+    if (changedBuff != null) {
+        expect(changedBuff.rank).toEqual(startingBuff.rank);
+        expect(changedBuff.name).toEqual(endingBuffValues.name);
+        expect(changedBuff._id).toEqual(endingBuffValues._id);
+    }
+});
+
+test("BuffController.editBuff() appropriately handles edits without a name value.", async () => {
+    const startingBuffValues = { name: "Starting value for edit buff test #3", rank: 0 };
+
+    const startingBuff = await BuffModel.create(startingBuffValues);
+
+    const endingBuffValues = { _id: startingBuff._id, rank: startingBuffValues.rank + 1 };
+
+    expect(startingBuffValues.rank).not.toEqual(endingBuffValues.rank);
+
+    const req: any = { query: endingBuffValues };
+    const res: any = { send: jest.fn() };
+    const next: any = jest.fn();
+
+    await new BuffController().editBuff(req, res, next);
+
+    expect(next).not.toBeCalled();
+
+    const changedBuff = await BuffModel.findOne({ _id: startingBuff._id }).exec();
+
+    expect(changedBuff).not.toBeNull();
+
+    if (changedBuff != null) {
+        expect(changedBuff.name).toEqual(startingBuffValues.name);
+        expect(changedBuff.rank).toEqual(endingBuffValues.rank);
+        expect(changedBuff._id).toEqual(endingBuffValues._id);
+    }
+});
+
+test("BuffController.editBuff() sends error with edit request with invalid rank data.", async () => {
+    const startingBuffValues = { name: "Starting value for edit buff test #2", rank: 0 };
+
+    const startingBuff = await BuffModel.create(startingBuffValues);
+
+    const endingBuffValues = { _id: startingBuff._id, name: "Changed Value", rank: "Invalid data, rank should be a number." };
+
+    const req: any = { query: endingBuffValues };
+    const res: any = { send: jest.fn() };
+    const next: any = jest.fn();
+
+    await new BuffController().editBuff(req, res, next);
+
+    expect(next).toBeCalled();
+
+    const changedBuff = await BuffModel.findOne({ _id: startingBuff._id }).exec();
+
+    expect(changedBuff).not.toBeNull();
+
+    if (changedBuff != null) {
+        expect(changedBuff.name).toEqual(startingBuff.name);
+        expect(changedBuff.rank).toEqual(startingBuff.rank);
+        expect(changedBuff._id).toEqual(startingBuff._id);
+    }
+});
+

@@ -14,6 +14,27 @@ export class BuffController {
         }
     }
 
+    public async editBuff(req: Request, res: Response, next: NextFunction) {
+        console.log("Recieved Buff edit REST request: " + req.url);
+        try {
+            const foundBuff = await BuffModel.findOne({ _id: req.query._id });
+            if (foundBuff == null) {
+                res.status(404).send("Buff not found");
+            } else {
+                if (req.query.rank) {
+                    foundBuff.rank = req.query.rank;
+                }
+
+                if (req.query.name) {
+                    foundBuff.name = req.query.name;
+                }
+                res.send(await foundBuff.save());
+            }
+        } catch (error) {
+            next(error);
+        }
+    }
+
     public async deleteBuff(req: Request, res: Response, next: NextFunction) {
         console.log("Received Buff delete request: " + req.url);
         try {
@@ -23,7 +44,6 @@ export class BuffController {
             else
                 res.send(deleted);
         } catch (error) {
-            console.log(error);
             return next(error);
         }
     }

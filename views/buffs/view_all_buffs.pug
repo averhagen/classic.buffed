@@ -1,9 +1,13 @@
 h1= 'Buffs'
 
 each buff in buffs
-    form(style="border: 1px solid" method="POST" action="/buffs/delete?_id=" + buff._id )
-        p= buff.name
-        p= "Rank: " + buff.rank
-        button(type="Submit") Delete
+    div(style="border: 1px solid")
+        form(method="POST" action="/buffs/delete?_id=" + buff._id )
+            p= buff.name
+            p= "Rank: " + buff.rank
+            button(type="Submit") Delete
+        
+        a(href="/buffs/edit?_id=" + buff._id) Edit
+    br
 
 a(href="/buffs/create") Create New Buff

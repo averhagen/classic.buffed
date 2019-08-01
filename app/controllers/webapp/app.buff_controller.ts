@@ -25,4 +25,42 @@ export class WebAppBuffController {
         console.log("Render Create Buff Page Requested.");
         res.render('buffs/create_buff.pug');
     }
+
+    public async renderEditBuffPage(req: Request, res: Response, next: NextFunction) {
+        console.log("Render Edit Buff Page Requested.");
+        try {
+            const foundBuff = await BuffModel.findOne({ _id: req.query._id }).exec();
+            if (foundBuff == null)
+                throw new Error("Unable to find Buff");
+            res.render('buffs/edit_buff.pug', { buff: foundBuff });
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    public async editBuff(req: Request, res: Response, next: NextFunction) {
+        console.log("Edit Buff Requested.");
+        try {
+            const params: any = {};
+
+            if (req.body._id) {
+                params._id = req.body._id;
+            } else {
+                throw new Error("Invalid input.");
+            }
+
+            if (req.body.name) {
+                params.name = req.body.name;
+            }
+
+            if (req.body.rank) {
+                params.rank = req.body.rank;
+            }
+            await axios.default.put("http://localhost:3000/rest/buffs", null, { params });
+            res.redirect('/buffs');
+        } catch (error) {
+            console.log(error);
+            return next(error);
+        }
+    }
 }
