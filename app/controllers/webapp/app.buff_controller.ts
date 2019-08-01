@@ -40,6 +40,27 @@ export class WebAppBuffController {
 
     public async editBuff(req: Request, res: Response, next: NextFunction) {
         console.log("Edit Buff Requested.");
-        res.send("Edit Buff requested.");
+        try {
+            const params: any = {};
+
+            if (req.body._id) {
+                params._id = req.body._id;
+            } else {
+                throw new Error("Invalid input.");
+            }
+
+            if (req.body.name) {
+                params.name = req.body.name;
+            }
+
+            if (req.body.rank) {
+                params.rank = req.body.rank;
+            }
+            await axios.default.put("http://localhost:3000/rest/buffs", null, { params });
+            res.redirect('/buffs');
+        } catch (error) {
+            console.log(error);
+            return next(error);
+        }
     }
 }
