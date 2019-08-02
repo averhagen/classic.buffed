@@ -10,6 +10,7 @@ statRouter.get('/create', statController.renderCreateStatView);
 statRouter.post('/create', statController.createStat);
 
 statRouter.get('/edit', statController.renderEditStatView);
+statRouter.post('/edit', statController.editStat);
 
 statRouter.post('/delete', statController.deleteStat);
 
