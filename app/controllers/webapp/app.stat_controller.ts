@@ -25,7 +25,7 @@ export class WebAppStatController {
     public async editStat(req: Request, res: Response, next: NextFunction) {
         console.log("Web app Edit Stat requested.");
         try {
-            axios.default.put("http://127.0.0.1:3000/rest/stats", null, { params: req.body });
+            await axios.default.put("http://127.0.0.1:3000/rest/stats", null, { params: req.body });
             res.redirect("/stats");
         } catch (error) {
             next(error);
