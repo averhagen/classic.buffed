@@ -1,10 +1,12 @@
 h1= 'Stats'
 
 each stat in stats
-    form(style="border: 1px solid" method="POST" action="/stats/delete?_id=" + stat._id )
-        p= stat.name
-        button(type="Submit") Delete
-
-br
+    div(style="border: 1px solid")
+        a(href="/stats/edit?_id=" + stat._id) Edit Stat
+    
+        form(method="POST" action="/stats/delete?_id=" + stat._id )
+            p= stat.name
+            button(type="Submit") Delete
+    br
 
 a(href="/stats/create") Create New Stat

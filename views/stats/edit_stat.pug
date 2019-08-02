@@ -1,0 +1,13 @@
+h1= 'Edit Stat Page'
+
+h2= stat.name
+
+form(action="/stats/edit" method="POST")
+    input(type="hidden" name="_id" value=stat._id)
+
+    label(for="name") Name: 
+    input(type="text" name="name" value=stat.name)
+
+    br
+    
+    button(type="Submit") Save

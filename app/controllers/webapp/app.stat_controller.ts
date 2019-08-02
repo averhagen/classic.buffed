@@ -10,6 +10,28 @@ export class WebAppStatController {
         res.render("stats/view_all_stats.pug", { stats: stats });
     }
 
+    public async renderEditStatView(req: Request, res: Response, next: NextFunction) {
+        console.log("Render Edit Stats View Requested");
+        try {
+            const foundStat = await statModel.findOne({ _id: req.query._id }).exec();
+            if (foundStat == null)
+                return res.status(404).send("404 Unable to find stat");
+            return res.render("stats/edit_stat.pug", { stat: foundStat });
+        } catch (error) {
+            return next(error);
+        }
+    }
+
+    public async editStat(req: Request, res: Response, next: NextFunction) {
+        console.log("Web app Edit Stat requested.");
+        try {
+            await axios.default.put("http://127.0.0.1:3000/rest/stats", null, { params: req.body });
+            res.redirect("/stats");
+        } catch (error) {
+            next(error);
+        }
+    }
+
     public async renderCreateStatView(req: Request, res: Response, next: NextFunction) {
         console.log("Render Create Stats View Requested.");
         res.render("stats/create_stat.pug");

@@ -16,6 +16,7 @@ restRouter.delete("/buffs", buffController.deleteBuff);
 const statController = new StatController();
 restRouter.post("/stats", statController.createStat);
 restRouter.delete("/stats", statController.deleteStat);
+restRouter.put("/stats", statController.editStat);
 
 // REST routes for buff_stat_values
 const buffStatValueController = new BuffStatValueController();
