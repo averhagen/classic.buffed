@@ -87,3 +87,33 @@ test("StatController.deleteStat() deletes the appropriate stat when a request wi
     expect(await findStat()).toBeNull();
     expect(next).not.toBeCalled();
 });
+
+test("StatController.editStat() correctly edits the value of a stat when sent a valid request.", async () => {
+
+    const unEditedStatValues = { name: "Unedited stat name test #1" };
+
+    const unEditedStat = await statModel.create(unEditedStatValues);
+
+    const editedStatValues = { name: "Edited name", _id: unEditedStat._id };
+
+    expect(unEditedStat.name).not.toEqual(editedStatValues.name);
+
+    const req: any = {
+        query: editedStatValues
+    };
+
+    const res: any = {
+    };
+
+    const next = jest.fn();
+
+    await new StatController().editStat(req, res, next);
+
+    const editedStat = await statModel.findOne({ _id: unEditedStat._id });
+
+    expect(editedStat).not.toBeNull();
+
+    if (editedStat) {
+        expect(editedStat.name).not.toEqual(unEditedStat.name);
+    }
+});
