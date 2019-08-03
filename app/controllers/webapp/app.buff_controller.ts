@@ -1,6 +1,9 @@
-import { Request, Response, NextFunction } from "express";
+import { NextFunction, Request, Response } from "express";
 import { BuffModel } from "../../models/buff";
+import { BuffStatValue } from "../../models/buff_stat_value"
+import { statModel } from "../../models/stat";
 import axios = require('axios');
+
 
 export class WebAppBuffController {
 
@@ -32,7 +35,8 @@ export class WebAppBuffController {
             const foundBuff = await BuffModel.findOne({ _id: req.query._id }).exec();
             if (foundBuff == null)
                 throw new Error("Unable to find Buff");
-            res.render('buffs/edit_buff.pug', { buff: foundBuff });
+            const buffStatValues = await BuffStatValue.find({ buff: foundBuff }).populate('stat').exec();
+            res.render('buffs/edit_buff.pug', { buff: foundBuff, buffStatValues: buffStatValues, stats: await statModel.find().exec() });
         } catch (error) {
             next(error);
         }
@@ -61,6 +65,26 @@ export class WebAppBuffController {
         } catch (error) {
             console.log(error);
             return next(error);
+        }
+    }
+
+    public async addBuffStatValue(req: Request, res: Response, next: NextFunction) {
+        console.log("Add buff stat value called");
+        try {
+            const params: any = {};
+
+            if (req.body.value && req.body.buff && req.body.stat) {
+                params.value = req.body.value;
+                params.buff = req.body.buff;
+                params.stat = req.body.stat;
+
+                await axios.default.post("http://localhost:3000/rest/buffstatvalues", null, { params });
+                res.redirect('back');
+            } else {
+                throw new Error("Missing input.");
+            }
+        } catch (error) {
+            next(error);
         }
     }
 }
