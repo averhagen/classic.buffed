@@ -11,6 +11,8 @@ buffRouter.get('/create', webAppBuffController.renderCreateBuffPage);
 buffRouter.get('/edit', webAppBuffController.renderEditBuffPage);
 buffRouter.post('/edit', webAppBuffController.editBuff);
 
+buffRouter.post('/addbuffstatvalue', webAppBuffController.addBuffStatValue);
+
 buffRouter.post('/delete', webAppBuffController.deleteBuff);
 
 export { buffRouter };
