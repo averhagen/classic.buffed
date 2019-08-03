@@ -1,19 +1,46 @@
 h1= 'Edit Buff'
 
-h3= buff.name + ' Rank ' + buff.rank
+div
+    h3= buff.name + ' Rank ' + buff.rank
 
-form(method="POST" action='/buffs/edit')
+    form(method="POST" action='/buffs/edit')
 
-    input(type="hidden", value=buff._id name="_id")
+        input(type="hidden", value=buff._id name="_id")
 
-    label(for="name") Buff Name:
-    input(type="text", value=buff.name placeholder="Buff Name" name="name")
-    
-    br
+        label(for="name") Buff Name:
+        input(type="text", value=buff.name placeholder="Buff Name" name="name")
+        
+        br
 
-    label(for="rank") Buff Rank:
-    input(type="text", value=buff.rank placeholder="Buff Rank" name="rank")
+        label(for="rank") Buff Rank:
+        input(type="text", value=buff.rank placeholder="Buff Rank" name="rank")
 
-    br
-    
-    button(type="Submit") Save
+        br
+        
+        button(type="Submit") Save
+
+div
+    h1= 'Add New Buff Value:'
+    form(action="/buffs/addbuffstatvalue" method="POST")
+        input(type="hidden" value=buff._id name="buff")
+
+        label(for="stat") Stat: 
+        select(name="stat")
+            each stat in stats 
+                option(value=stat._id) #{ stat.name }
+
+        br
+
+        label(for="value") Value: 
+        input(type="text" name="value")
+
+        br
+
+        button(type="Submit") Add Value
+
+div
+    h1="Current Values:"
+    each buffStatValue in buffStatValues
+        form(method="PUT")
+            input(type="hidden", value=buffStatValue._id name="_id")
+            label(for="value") #{ buffStatValue.stat.name + ": " + buffStatValue.value }
