@@ -2,6 +2,7 @@ import express = require('express');
 import { BuffController } from '../controllers/rest/buff_controller';
 import { StatController } from '../controllers/rest/stat_controller';
 import { BuffStatValueController } from '../controllers/rest/buff_stat_value_controller';
+import { BuffSetController } from '../controllers/rest/buff_set_controller';
 
 const restRouter = express.Router();
 
@@ -22,5 +23,9 @@ restRouter.put("/stats", statController.editStat);
 const buffStatValueController = new BuffStatValueController();
 restRouter.get("/buffstatvalues", buffStatValueController.getBuffStatValue);
 restRouter.post("/buffstatvalues", buffStatValueController.addNewBuffStatValue);
+
+// REST routes for stat_buffer
+const buffSetController = new BuffSetController();
+restRouter.get("/buffsets", buffSetController.getBuffSet);
 
 export { restRouter };
