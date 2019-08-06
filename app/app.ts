@@ -13,6 +13,9 @@ const app: express.Application = express();
 app.use(express.json());
 app.use(express.urlencoded());
 
+// Set the path where all public files are accessed.
+app.use(express.static('public'));
+
 // Set the path where all the view files are stored.
 app.set('views', './views');
 
