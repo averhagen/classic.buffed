@@ -1,32 +1,28 @@
 html
   head
     title= title
+    script(src='js/index.js')
   body
     div Container Div
       div
-        h3 Pre Buffed Stats
+        a(style="font-size: 20px" href='/stats') Stats
         table
           each stat in stats
             tr
               td
                 label(for=stat.name) #{ stat.name + ": "}
               td
-                input(id=stat.name type="text" size="8")
+                input(value="0" class="stat-list__input" id=stat._id type="text" size="8")
+              td
+                p(class="stat-list__output" id="output" + stat._id) 0
       div
-        h3 Buffs
+        form(action="rest/buffsets" method="GET")
+          a(style="font-size: 20px" href='/buffs') Buffs
           table
             each buff in buffs
               tr
                 td
-                  input(id=buff.name type="checkbox")
+                  input(class="buff-list__checkbox" onclick="getStatDifferentials()" id="buff_checkbox" + buff._id name="buff_id" value=buff._id type="checkbox")
                 td
                   label(for=buff.name) #{ buff.name }
                 td #{ "Rank: " + buff.rank }
-               
-      div
-        h3 Post Buff Stats
-        table
-          each stat in stats
-            tr
-              td #{ stat.name + ": "}
-              td After Buff Value
