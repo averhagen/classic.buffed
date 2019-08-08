@@ -1,3 +1,12 @@
-.stat-list_difference-label {
-    color: green;
+body {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.stat-list {
+    flex-grow: 4;
+}
+
+.buff-list {
+    flex-grow: 1;
 }
