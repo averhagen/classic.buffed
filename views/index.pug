@@ -14,6 +14,12 @@ html
               td
                 input(value="0" class="stat-list__input" id=stat._id type="text" size="8")
               td
+                p= "+"
+              td
+                p(class="stat-list_difference-label" id="diff" + stat._id) 0
+              td
+                p= "="
+              td
                 p(class="stat-list__output" id="output" + stat._id) 0
       div
         form(action="rest/buffsets" method="GET")
