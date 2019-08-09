@@ -47,6 +47,10 @@ function setOutputLabelsToMatchInputValue() {
 function addStatDifferentialsToOutputLabels(statDifferentials) {
     for (let i = 0; i < statDifferentials.length; i++) {
         let currentStatDifferential = statDifferentials[i];
+
+        let diffLabel = document.getElementById("diff" + currentStatDifferential.stat._id);
+        diffLabel.innerHTML = currentStatDifferential.difference;
+        
         let outputLabel = document.getElementById("output" + currentStatDifferential.stat._id);
         outputLabel.innerHTML = parseInt(outputLabel.innerHTML) + currentStatDifferential.difference;
     }
