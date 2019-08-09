@@ -6,24 +6,31 @@ body {
     justify-content: flex-end;
 }
 
-.stat-list__heading-label {
+.stat-list-title {
     text-decoration: none;
 }
 
-.stat-list__heading-label:visited {
+.stat-list-title {
     color: #FFD100;
 }
 
 .stat-list__table {
+    border-color: #FFD100;
+    border-radius: 5px;
+    border: solid 1px;
+    font-size: large;
     background: rgb(63, 63, 63);
 }
 
 .stat-list {
-    flex-grow: 4;
+    flex-grow: 2;
     color: #FFD100;
 }
 
 .stat-list__input {
+    font-size: large;
+    border-radius: 3px;
+    font-family: 'Nunito';
     text-align: center;
     border-color: #FFD100;
     width: 50px;
@@ -36,6 +43,15 @@ body {
     color: rgb(38, 182, 12);
 }
 
-.buff-list {
+.buff-list__form {
+    border-color: #FFD100;
+    border-radius: 5px;
+    border: solid 1px;
+    font-size: large;
+    background: rgb(63, 63, 63);
     flex-grow: 1;
+}
+
+.buff-list__checkbox-label {
+    font-size: large;
 }

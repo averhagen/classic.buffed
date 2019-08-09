@@ -6,7 +6,7 @@ html
     script(src='js/index.js')
   body
     div(class="stat-list")
-      a(class="stat-list__heading-label" style="font-size: 20px" href='/stats') Stats
+      a(class="stat-list-title" style="font-size: 20px" href='/stats') Stats
       table(class="stat-list__table")
         each stat in stats
           tr
@@ -23,13 +23,14 @@ html
             td
               p(class="stat-list__stat-label" id="output" + stat._id) 0
     div(class="buff-list")
-      form(action="rest/buffsets" method="GET")
-        a(style="font-size: 20px" href='/buffs') Buffs
+      a(style="font-size: 20px" href='/buffs') Buffs
+      form(class="buff-list__form" action="rest/buffsets" method="GET")
         table
           each buff in buffs
             tr
               td
                 input(class="buff-list__checkbox" onclick="getStatDifferentials()" id="buff_checkbox" + buff._id name="buff_id" value=buff._id type="checkbox")
               td
-                label(for=buff.name) #{ buff.name }
-              td #{ "Rank: " + buff.rank }
+                label(class="buff-list__checkbox-label" for=buff.name) #{ buff.name }
+              td 
+                p(class="buff-list__checkbox-label") #{ "Rank: " + buff.rank }
