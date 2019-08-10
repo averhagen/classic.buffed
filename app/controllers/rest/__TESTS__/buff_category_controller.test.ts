@@ -24,3 +24,27 @@ test("That BuffCategoryController.getBuffCategory() returns the correct BuffCate
 
     expect(res.send).toBeCalledWith({ name: buffCategoryValues.name, _id: buffCategory._id, __v: buffCategory.__v });
 });
+
+test("That BuffCategoryController.createBuffCategory() creates a BuffCategory with the correct name.", async () => {
+    const buffCategoryValues: BuffCategoryFields = {
+        name: "Mock Buff Category name for BuffCategoryController.createBuffCategory() positive test."
+    };
+
+    const preCreatedBuffCategory = await BuffCategoryModel.findOne(buffCategoryValues).exec();
+    expect(preCreatedBuffCategory).toBeNull();
+
+    const req: any = { query: buffCategoryValues };
+    const res: any = {
+        send: jest.fn()
+    }
+
+    const buffCategoryController = new BuffCategoryController();
+
+    await buffCategoryController.createBuffCategory(req, res, jest.fn());
+    const buffCategoryPostRequest = await BuffCategoryModel.findOne(buffCategoryValues).exec();
+
+    expect(buffCategoryPostRequest).not.toBeNull();
+    if (buffCategoryPostRequest) {
+        expect(buffCategoryPostRequest.name).toEqual(buffCategoryValues.name);
+    }
+});
