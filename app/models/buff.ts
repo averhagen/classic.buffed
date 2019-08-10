@@ -1,19 +1,26 @@
 import mongoose = require('mongoose');
+import { BuffCategoryModel, BuffCategoryDocument } from './buff_category';
 
 const buffCollectionName: string = "buff";
 const nameFieldOptions = { type: String, required: true };
 const rankFieldOptions = { type: Number, required: true };
+const buffCategoryFieldOptions = { type: mongoose.Schema.Types.ObjectId, ref: BuffCategoryModel.modelName, required: false };
 
-interface BuffDocument extends mongoose.Document {
+interface BuffFields {
     name: string,
-    rank: number
+    rank: number,
+    buff_category?: BuffCategoryDocument['_id']
+}
+
+interface BuffDocument extends BuffFields, mongoose.Document {
 }
 
 const buffSchema = new mongoose.Schema({
     name: nameFieldOptions,
-    rank: rankFieldOptions
+    rank: rankFieldOptions,
+    buff_category: buffCategoryFieldOptions
 }, { collection: buffCollectionName });
 
 const BuffModel = mongoose.model<BuffDocument>(buffCollectionName, buffSchema);
 
-export { BuffDocument, BuffModel };
+export { BuffFields, BuffDocument, BuffModel };
