@@ -3,8 +3,11 @@ import mongoose = require('mongoose');
 const collectionName = "buff_category";
 const nameFieldOptions = { type: String, required: true };
 
-interface BuffCategoryDocument extends mongoose.Document {
+interface BuffCategoryFields {
     name: string;
+}
+
+interface BuffCategoryDocument extends BuffCategoryFields, mongoose.Document {
 }
 
 const BuffCategorySchema = new mongoose.Schema({
@@ -13,4 +16,4 @@ const BuffCategorySchema = new mongoose.Schema({
 
 const BuffCategoryModel = mongoose.model<BuffCategoryDocument>(collectionName, BuffCategorySchema);
 
-export { BuffCategoryDocument, BuffCategoryModel };
+export { BuffCategoryFields, BuffCategoryDocument, BuffCategoryModel };
