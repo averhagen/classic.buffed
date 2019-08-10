@@ -10,7 +10,7 @@ export class BuffCategoryController {
                 if (buffCategory) {
                     return res.send(buffCategory.toJSON());
                 } else {
-                    throw new Error("No buff with ID:" + req.query._id + " found.");
+                    return res.json({});
                 }
             } else {
                 throw new Error("No Buff Category ID provided.");
