@@ -3,6 +3,7 @@ import { BuffModel } from "../../models/buff";
 import { BuffStatValue } from "../../models/buff_stat_value"
 import { statModel } from "../../models/stat";
 import axios = require('axios');
+import { BuffCategoryModel } from "../../models/buff_category";
 
 
 export class WebAppBuffController {
@@ -26,7 +27,8 @@ export class WebAppBuffController {
 
     public async renderCreateBuffPage(req: Request, res: Response, next: NextFunction) {
         console.log("Render Create Buff Page Requested.");
-        res.render('buffs/create_buff.pug');
+        const buffCategories = await BuffCategoryModel.find().exec();
+        res.render('buffs/create_buff.pug', { buff_categories: buffCategories });
     }
 
     public async renderEditBuffPage(req: Request, res: Response, next: NextFunction) {
