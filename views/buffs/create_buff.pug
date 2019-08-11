@@ -10,5 +10,10 @@ form(method="POST" action='/rest/buffs')
     input(type="text", placeholder="Buff Rank" name="rank")
 
     br
+
+    label(for="buff_category")
+    select(name="buff_category")
+        each buff_category in buff_categories
+            option(value=buff_category._id) #{ buff_category.name }
     
     button(type="Submit") Create
