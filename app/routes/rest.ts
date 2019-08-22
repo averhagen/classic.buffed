@@ -29,6 +29,7 @@ restRouter.put("/stats", statController.editStat);
 // REST routes for stat category
 const statCategoryController = new RestControllerStatCategory();
 restRouter.post("/statcategory", statCategoryController.createStatCategory);
+restRouter.delete("/statcategory", statCategoryController.deleteStatCategory);
 
 // REST routes for buff_stat_values
 const buffStatValueController = new BuffStatValueController();
