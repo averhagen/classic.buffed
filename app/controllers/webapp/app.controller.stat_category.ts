@@ -9,4 +9,16 @@ export class WebappStatCategoryController {
             next(error);
         }
     }
+
+    public createStatCategory(req: Request, res: Response, next: NextFunction) {
+        try {
+            if (req.body.name) {
+                res.send("Created stat category : " + req.body.name);
+            } else {    
+                throw new Error("Invalid params to create stat category.");
+            }
+        } catch (error) {
+            next(error);
+        }
+    }
 }
