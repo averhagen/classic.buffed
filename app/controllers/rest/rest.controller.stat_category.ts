@@ -16,4 +16,20 @@ export class RestControllerStatCategory {
             return next(error);
         }
     }
+
+    public async deleteStatCategory(req: Request, res: Response, next: NextFunction) {
+        try {
+            const idParam = req.query._id;
+            if (idParam) {
+                const deletedStatCategory = StatCategoryModel.findOneAndDelete({ _id: idParam });
+                if (deletedStatCategory == null) {
+                    throw new Error("Stat Category not found with id: " + idParam);
+                } else {
+                    res.send(deletedStatCategory);
+                }
+            }
+        } catch (error) {
+            next(error);
+        }
+    }
 }
