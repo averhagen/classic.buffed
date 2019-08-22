@@ -1,0 +1,5 @@
+each statcategory in stat_categories
+    div
+        form(method="POST" action="/statcategory/delete?_id=" + statcategory._id )
+        p= statcategory.name
+        button(type="Submit") Delete

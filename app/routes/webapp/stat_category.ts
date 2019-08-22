@@ -5,7 +5,9 @@ const statCategoryRouter = Router();
 
 const controller = new WebappStatCategoryController();
 
+statCategoryRouter.get('/', controller.renderViewAllStatCategories);
+
 statCategoryRouter.get('/create', controller.renderCreateStatCategory);
 statCategoryRouter.post('/create', controller.createStatCategory);
 
-export { statCategoryRouter }; 
+export { statCategoryRouter };
