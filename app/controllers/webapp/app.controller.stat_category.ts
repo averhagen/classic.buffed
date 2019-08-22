@@ -17,7 +17,8 @@ export class WebappStatCategoryController {
             if (req.body.name) {
                 const params: any = {};
                 params.name = req.body.name;
-                res.send((await axios.default.post("http://localhost:3000/rest/statcategory", null, { params })).data);
+                await axios.default.post("http://localhost:3000/rest/statcategory", null, { params });
+                res.redirect("/statcategory");
             } else {
                 throw new Error("Invalid params to create stat category.");
             }
@@ -39,9 +40,9 @@ export class WebappStatCategoryController {
         try {
             const idParam = req.body._id;
             if (idParam) {
-                const params: any = {};
-                params._id = idParam;
+                const params: any = { _id: idParam };
                 await axios.default.delete("http://localhost:3000/rest/statcategory", { params });
+                res.redirect("/statcategory");
             } else {
                 throw new Error("No id param provided");
             }
