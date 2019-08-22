@@ -4,6 +4,7 @@ import { StatController } from '../controllers/rest/stat_controller';
 import { BuffStatValueController } from '../controllers/rest/buff_stat_value_controller';
 import { BuffSetController } from '../controllers/rest/buff_set_controller';
 import { BuffCategoryController } from '../controllers/rest/buff_category_controller';
+import { RestControllerStatCategory } from '../controllers/rest/rest.controller.stat_category';
 
 const restRouter = express.Router();
 
@@ -24,6 +25,10 @@ const statController = new StatController();
 restRouter.post("/stats", statController.createStat);
 restRouter.delete("/stats", statController.deleteStat);
 restRouter.put("/stats", statController.editStat);
+
+// REST routes for stat category
+const statCategoryController = new RestControllerStatCategory();
+restRouter.post("/statcategory", statCategoryController.createStatCategory);
 
 // REST routes for buff_stat_values
 const buffStatValueController = new BuffStatValueController();
