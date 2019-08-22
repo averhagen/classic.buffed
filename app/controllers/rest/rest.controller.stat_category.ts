@@ -18,10 +18,11 @@ export class RestControllerStatCategory {
     }
 
     public async deleteStatCategory(req: Request, res: Response, next: NextFunction) {
+        console.log("Delete Stat Category REST requested");
         try {
             const idParam = req.query._id;
             if (idParam) {
-                const deletedStatCategory = StatCategoryModel.findOneAndDelete({ _id: idParam });
+                const deletedStatCategory = await StatCategoryModel.findOneAndDelete({ _id: idParam });
                 if (deletedStatCategory == null) {
                     throw new Error("Stat Category not found with id: " + idParam);
                 } else {
