@@ -21,11 +21,6 @@ test("RestControllerStatCategory.createStatCategory() fails to create a stat whe
     expect(nextFunction).toBeCalled();
 });
 
-test("RestControllerStatCategory.createStatCategory() creates the proper stat when sent correct query params", async () => {
-
-});
-
-
 test("That RestControllerStatCategory.createStatCategory() creates a StatCategory with the correct name.", async () => {
     const statCategoryValues: StatCategoryFields = {
         name: "Mock Stat Category name for RestControllerStatCategory.createStatCategory() positive test."
