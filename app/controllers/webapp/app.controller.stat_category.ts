@@ -1,4 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
+import axios = require('axios');
+import { StatCategoryModel } from '../../models/stat_category';
 
 export class WebappStatCategoryController {
 
@@ -10,12 +12,38 @@ export class WebappStatCategoryController {
         }
     }
 
-    public createStatCategory(req: Request, res: Response, next: NextFunction) {
+    public async createStatCategory(req: Request, res: Response, next: NextFunction) {
         try {
             if (req.body.name) {
-                res.send("Created stat category : " + req.body.name);
-            } else {    
+                const params: any = {};
+                params.name = req.body.name;
+                res.send((await axios.default.post("http://localhost:3000/rest/statcategory", null, { params })).data);
+            } else {
                 throw new Error("Invalid params to create stat category.");
+            }
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    public async renderViewAllStatCategories(req: Request, res: Response, next: NextFunction) {
+        try {
+            const categories = await StatCategoryModel.find().exec();
+            res.render("stat_category/view_all_stat_categories", { stat_categories: categories });
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    public async deleteStatCategory(req: Request, res: Response, next: NextFunction) {
+        try {
+            const idParam = req.body._id;
+            if (idParam) {
+                const params: any = {};
+                params._id = idParam;
+                await axios.default.delete("http://localhost:3000/rest/statcategory", { params });
+            } else {
+                throw new Error("No id param provided");
             }
         } catch (error) {
             next(error);
