@@ -7,6 +7,7 @@ import { restRouter } from './routes/rest';
 import { buffRouter } from './routes/webapp/buff';
 import { statRouter } from './routes/webapp/stats';
 import { buffCategoryRouter } from './routes/webapp/buff_category';
+import { statCategoryRouter } from './routes/webapp/stat_category';
 
 // Create a new express application instance
 const app: express.Application = express();
@@ -37,6 +38,7 @@ app.use('/rest', restRouter);
 app.use('/buffs', buffRouter);
 app.use('/stats', statRouter);
 app.use('/buffcategory', buffCategoryRouter);
+app.use('/statcategory', statCategoryRouter);
 
 // Start app listening on port 3000
 app.listen(3000, function () {
