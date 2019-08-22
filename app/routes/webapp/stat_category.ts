@@ -10,4 +10,6 @@ statCategoryRouter.get('/', controller.renderViewAllStatCategories);
 statCategoryRouter.get('/create', controller.renderCreateStatCategory);
 statCategoryRouter.post('/create', controller.createStatCategory);
 
+statCategoryRouter.post('/delete', controller.deleteStatCategory);
+
 export { statCategoryRouter };
