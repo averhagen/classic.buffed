@@ -1,6 +1,8 @@
 import { startConnectionToTestDB, stopConnectionToTestDB } from "../../../test_utils/connection_utils";
 import { statModel } from "../../../models/stat";
 import { StatController } from "../stat_controller";
+import { getUniqueString } from "../../../test_utils/value_generator";
+import { StatCategoryModel } from "../../../models/stat_category";
 
 beforeAll(startConnectionToTestDB);
 afterAll(stopConnectionToTestDB);
@@ -28,11 +30,14 @@ test("StatController.createStat() returns an error when sent a request with inva
 
 test("StatController.createStat() makes the correct stat when sent a request with valid params.", async () => {
 
-    const statName: string = "StatController.createStat() valid stat name yhzxysadf";
+    const statCategoryDocument = await new StatCategoryModel({ name: getUniqueString() }).save();
+
+    const statName: string = getUniqueString();
 
     const req: any = {
         query: {
-            name: statName
+            name: statName,
+            stat_category: statCategoryDocument._id
         },
     };
 
