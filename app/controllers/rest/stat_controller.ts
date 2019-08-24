@@ -22,6 +22,9 @@ export class StatController {
                 if (req.query.name) {
                     foundStat.name = req.query.name;
                 }
+                if(req.query.stat_category) {
+                    foundStat.stat_category = req.query.stat_category;
+                }
                 res.send(await foundStat.save());
             } else {
                 res.status(404).send("Unable to find stat with given ID");
