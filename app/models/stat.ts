@@ -1,14 +1,23 @@
 import mongoose = require("mongoose");
+import { StatCategoryModel, StatCategoryDocument } from "./stat_category";
 
 const collectionName: string = "stat";
 const nameFieldOptions = { type: String, required: true };
+const statCategoryFieldOptions = { type: mongoose.Schema.Types.ObjectId, ref: StatCategoryModel.modelName, required: true }
 
-interface StatDocument extends mongoose.Document {
-    name: string
+interface StatDocumentFields {
+    name: string,
+    stat_category: StatCategoryDocument['_id']
+}
+
+interface StatDocument extends mongoose.Document, StatDocumentFields {
 }
 
 const statSchema = new mongoose.Schema(
-    { name: nameFieldOptions },
+    {
+        name: nameFieldOptions,
+        stat_category: statCategoryFieldOptions
+    },
     { collection: collectionName }
 );
 
