@@ -23,4 +23,4 @@ const statSchema = new mongoose.Schema(
 
 const statModel = mongoose.model<StatDocument>(collectionName, statSchema);
 
-export { statSchema, statModel, StatDocument }
+export { statSchema, statModel, StatDocument, StatDocumentFields }
