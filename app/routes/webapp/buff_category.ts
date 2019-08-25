@@ -12,4 +12,6 @@ buffCategoryRouter.get('', webAppBuffCategoryController.renderViewAllBuffCategor
 
 buffCategoryRouter.post('/delete', webAppBuffCategoryController.deleteBuffCategory);
 
+buffCategoryRouter.get('/edit', webAppBuffCategoryController.renderEditBuffCategoryPage);
+
 export { buffCategoryRouter } 
