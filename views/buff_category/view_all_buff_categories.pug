@@ -2,3 +2,8 @@ h1= "Buff Categories"
 
 each buff_category in buff_categories
     p= buff_category.name
+
+    form(action="/buffcategory/delete" method="POST")
+        input(type="hidden" name="_id" value=buff_category._id)
+
+        button(type="Submit") Delete
