@@ -1,7 +1,9 @@
 h1= "Buff Categories"
 
 each buff_category in buff_categories
-    p= buff_category.name
+    h2= buff_category.name
+
+    a(href='/buffcategory/edit?_id=' + buff_category._id) Edit
 
     form(action="/buffcategory/delete" method="POST")
         input(type="hidden" name="_id" value=buff_category._id)
