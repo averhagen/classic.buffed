@@ -8,20 +8,12 @@ import { BuffCategoryModel } from "../../models/buff_category";
 
 export class WebAppBuffController {
 
-    public async deleteBuff(req: Request, res: Response, next: NextFunction) {
-        console.log("Received Buff delete request: " + req.url);
-        try {
-            await axios.default.delete("/rest/buffs?_id=" + req.query._id, { baseURL: "http://localhost:3000" });
-            res.redirect('/buffs');
-        } catch (error) {
-            console.log(error);
-            return next(error);
-        }
-    }
-
     public async renderViewAllBuffsPage(req: Request, res: Response, next: NextFunction) {
-        console.log("Render All Buffs Requested.");
-        const buffs = await BuffModel.find().exec();
+        console.log("Web App Request: Render View All Buffs");
+        const buffs = await BuffModel.find().populate('buff_category').exec();
+        for(let i = 0; i < buffs.length; i ++) {
+            console.log(buffs[i]);
+        }
         res.render('buffs/view_all_buffs.pug', { buffs: buffs });
     }
 
@@ -41,6 +33,17 @@ export class WebAppBuffController {
             res.render('buffs/edit_buff.pug', { buff: foundBuff, buffStatValues: buffStatValues, stats: await statModel.find().exec() });
         } catch (error) {
             next(error);
+        }
+    }
+
+    public async deleteBuff(req: Request, res: Response, next: NextFunction) {
+        console.log("Received Buff delete request: " + req.url);
+        try {
+            await axios.default.delete("/rest/buffs?_id=" + req.query._id, { baseURL: "http://localhost:3000" });
+            res.redirect('/buffs');
+        } catch (error) {
+            console.log(error);
+            return next(error);
         }
     }
 
