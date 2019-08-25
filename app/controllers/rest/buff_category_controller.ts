@@ -32,4 +32,26 @@ export class BuffCategoryController {
             return next(error);
         }
     }
+
+    public async editBuffCategory(req: Request, res: Response, next: NextFunction) {
+        try {
+            const id = req.query._id;
+            if (id) {
+                const buffCategory = await BuffCategoryModel.findById(id);
+                if (buffCategory) {
+                    const newName = req.query.name;
+                    if (newName) {
+                        buffCategory.name = newName;
+                    }
+                    res.send(await buffCategory.save())
+                } else {
+                    res.status(404).send("Buff Category not found.");
+                }
+            } else {
+                throw new Error("No buff category id provided");
+            }
+        } catch (error) {
+            next(error);
+        }
+    }
 }
