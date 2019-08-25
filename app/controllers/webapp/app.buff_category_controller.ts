@@ -4,6 +4,12 @@ import axios = require('axios');
 
 export class WebAppBuffCategoryController {
 
+    public async renderViewAllBuffCategoriesPage(req: Request, res: Response, next: NextFunction) {
+        console.log("Render View All Buff Categories requested.");
+        const buffCategories = await BuffCategoryModel.find().exec();
+        res.render('buff_category/view_all_buff_categories.pug', { buff_categories: buffCategories });
+    }
+
     public async renderCreateBuffCategoryPage(req: Request, res: Response, next: NextFunction) {
         console.log("Render Create Buff Category page Requested.")
         const buffCategories = await BuffCategoryModel.find().exec();
