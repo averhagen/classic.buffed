@@ -31,8 +31,14 @@ app.get('/index', async function (req, res) {
     const buffs = await BuffModel.find().exec();
     const stats = await statModel.find().exec();
     const statCategories = await StatCategoryModel.find().exec();
-    const buffCategories = await BuffCategoryModel.find().exec();
-    res.render('index', { title: "Classic.Buffed", stats: stats, stat_categories: statCategories, buffs: buffs, buff_categories: buffCategories });
+    res.render('index',
+      {
+        title: "Classic.Buffed",
+        stats: stats,
+        stat_categories: statCategories,
+        buffs: buffs,
+        buff_categories: await BuffCategoryModel.find().exec()
+      });
   } catch (error) {
     console.log(error);
   }
