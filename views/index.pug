@@ -10,7 +10,8 @@ html
       each stat_category in stat_categories
         div(class="stat-list")
           br
-          table(class="stat-list__table") #{ stat_category.name }
+          h3= stat_category.name
+          table(class="stat-list__table")
             each stat in stats
               if (String(stat_category._id) == String(stat.stat_category))
                 tr
@@ -29,13 +30,15 @@ html
     
     div(class="buff-list")
       a(style="font-size: 20px" href='/buffs') Buffs
-      form(class="buff-list__form" action="rest/buffsets" method="GET")
-        table
-          each buff in buffs
-            tr
-              td
-                input(class="buff-list__checkbox" onclick="getStatDifferentials()" id="buff_checkbox" + buff._id name="buff_id" value=buff._id type="checkbox")
-              td
-                label(class="buff-list__checkbox-label" for=buff.name) #{ buff.name }
-              td 
-                p(class="buff-list__checkbox-label") #{ "Rank: " + buff.rank }
+      each buff_category in buff_categories
+        h3= buff_category.name
+          table
+            each buff in buffs
+              if (String(buff_category._id) == String(buff.buff_category))
+                tr
+                  td
+                    input(class="buff-list__checkbox" onclick="getStatDifferentials()" id="buff_checkbox" + buff._id name="buff_id" value=buff._id type="checkbox")
+                  td
+                    label(class="buff-list__checkbox-label" for=buff.name) #{ buff.name }
+                  td 
+                    p(class="buff-list__checkbox-label") #{ "Rank: " + buff.rank }
