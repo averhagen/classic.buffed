@@ -1,27 +1,32 @@
-import { BuffModel, BuffDocument } from "../../../models/buff";
-import { statModel, StatDocument } from "../../../models/stat";
+import { BuffDocument, BuffModel, BuffFields } from "../../../models/buff";
 import { BuffStatValue } from "../../../models/buff_stat_value";
+import { StatDocument, StatDocumentFields, statModel } from "../../../models/stat";
+import { StatCategoryDocument, StatCategoryFields, StatCategoryModel } from "../../../models/stat_category";
 import { startConnectionToTestDB, stopConnectionToTestDB } from "../../../test_utils/connection_utils";
+import { getUniqueString, getUniqueNumber } from "../../../test_utils/value_generator";
 import { BuffStatValueController } from "../buff_stat_value_controller";
 
 beforeAll(async () => {
     await startConnectionToTestDB();
-    const timeSeed = Date.now();
 
-    // Create and save fake buff data.
+    // Create 10 buffs each with 5 ranks and save buff data.
     const mockBuffDocuments: BuffDocument[] = [];
     for (let i = 0; i < 10; i++) {
-        const mockBuffName: string = "getBuffStatValue mock buff name " + timeSeed + i;
+        const mockBuffName: string = getUniqueString();
         for (let j = 0; j < 5; j++) {
             mockBuffDocuments.push(await new BuffModel({ name: mockBuffName, rank: j }).save());
         }
     }
 
+    // Create and save a fake stat category
+    const statCategoryFields: StatCategoryFields = { name: getUniqueString() };
+    const statCategoryDocument: StatCategoryDocument = await new StatCategoryModel(statCategoryFields).save();
+
     //Create and save fake stat data.
     const mockStatDocuments: StatDocument[] = [];
     for (let i = 0; i < 10; i++) {
-        const mockBuffName: string = "getBuffStatValue mock stat name " + timeSeed + i;
-        mockStatDocuments.push(await new statModel({ name: mockBuffName }).save());
+        const statValues: StatDocumentFields = { name: getUniqueString(), stat_category: statCategoryDocument._id };
+        mockStatDocuments.push(await new statModel(statValues).save());
     }
 
     //Create and save mock BuffStatValue documents
@@ -39,13 +44,17 @@ beforeAll(async () => {
 afterAll(stopConnectionToTestDB);
 
 test("addNewBuffStatValue() creates the correct buffStatValue when sent a request with valid query params", async () => {
-    const buffValues = {
-        name: "buff_stat_value buff name test",
-        rank: 0
+    const buffValues: BuffFields = {
+        name: getUniqueString(),
+        rank: getUniqueNumber()
     }
 
-    const statValues = {
-        name: "buff_stat_value controller test mock stat name",
+    const statCategoryFields: StatCategoryFields = { name: getUniqueString() };
+    const statCategoryDocument = await new StatCategoryModel(statCategoryFields);
+
+    const statValues: StatDocumentFields = {
+        name: getUniqueString(),
+        stat_category: statCategoryDocument._id
     }
 
     const buffDoc = await new BuffModel(buffValues).save();

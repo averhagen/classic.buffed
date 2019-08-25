@@ -1,7 +1,9 @@
 import * as connection_utils from "../../test_utils/connection_utils";
+import { getUniqueNumber, getUniqueString } from "../../test_utils/value_generator";
 import { BuffModel } from "../buff";
 import { BuffStatValue } from "../buff_stat_value";
-import { statModel } from "../stat";
+import { StatDocumentFields, statModel } from "../stat";
+import { StatCategoryFields, StatCategoryModel } from "../stat_category";
 
 beforeAll(async () => { await connection_utils.startConnectionToTestDB(); });
 
@@ -21,10 +23,13 @@ test("BuffStatValue.save() fails when trying to save a BuffStatValue with empty 
 });
 
 test("BuffStatValue.save() fails when trying to save a BuffStatValue without a value.", async () => {
-    const buffValues = { name: "aas;dlkfjnoieu fake buff name", rank: 32 };
+    const buffValues = { name: getUniqueString(), rank: getUniqueNumber() };
     const mockBuff = await new BuffModel(buffValues).save();
 
-    const statValues = { name: "aasdoyqweouzlkjdf fake name" };
+    const statCategoryValues: StatCategoryFields = { name: getUniqueString() };
+    const mockStatCategory = await new StatCategoryModel(statCategoryValues).save();
+
+    const statValues: StatDocumentFields = { name: getUniqueString(), stat_category: mockStatCategory._id };
     const mockStat = await new statModel(statValues).save();
 
     let errorThrown = false;
@@ -39,7 +44,7 @@ test("BuffStatValue.save() fails when trying to save a BuffStatValue without a v
 });
 
 test("BuffStatValue.save() fails when trying to save a BuffStatValue without a stat.", async () => {
-    const buffValues = { name: "buff_stat_value.test #3 fake buff name", rank: 32 };
+    const buffValues = { name: getUniqueString(), rank: getUniqueNumber() };
     const mockBuff = await new BuffModel(buffValues).save();
 
     const mockValue = 23;
@@ -57,15 +62,16 @@ test("BuffStatValue.save() fails when trying to save a BuffStatValue without a s
 
 test("BuffStatValue.save() fails when trying to save a BuffStatValue without a buff.", async () => {
 
-    const mockValue: number = 22;
+    const categoryValues: StatCategoryFields = { name: getUniqueString() };
+    const mockCategory = await new StatCategoryModel(categoryValues).save();
 
-    const statValues = { name: "BuffStatValue test #4 fake stat name." };
+    const statValues: StatDocumentFields = { stat_category: mockCategory._id, name: getUniqueString() };
     const mockStat = await new statModel(statValues).save();
 
     let errorThrown = false;
 
     try {
-        await new BuffStatValue({ value: mockValue, stat: mockStat }).save();
+        await new BuffStatValue({ value: getUniqueNumber(), stat: mockStat }).save();
     } catch (error) {
         errorThrown = true;
     }

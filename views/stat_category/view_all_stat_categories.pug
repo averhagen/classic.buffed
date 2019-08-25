@@ -1,0 +1,8 @@
+each statcategory in stat_categories
+    div
+        form(method="POST" action="/statcategory/delete")
+            p= statcategory.name
+            input(type="hidden" name="_id" value=statcategory._id)
+            button(type="Submit") Delete
+
+a(href="statcategory/create") Create new Stat Category

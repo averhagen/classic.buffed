@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { statModel } from "../../models/stat";
 import axios = require('axios');
+import { StatCategoryModel } from "../../models/stat_category";
 
 export class WebAppStatController {
 
@@ -16,7 +17,8 @@ export class WebAppStatController {
             const foundStat = await statModel.findOne({ _id: req.query._id }).exec();
             if (foundStat == null)
                 return res.status(404).send("404 Unable to find stat");
-            return res.render("stats/edit_stat.pug", { stat: foundStat });
+            const stat_categories = await StatCategoryModel.find().exec();
+            return res.render("stats/edit_stat.pug", { stat_categories: stat_categories, stat: foundStat });
         } catch (error) {
             return next(error);
         }

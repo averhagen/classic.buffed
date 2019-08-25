@@ -5,23 +5,28 @@ html
     link(rel="stylesheet", href="css/index.css")
     script(src='js/index.js')
   body
-    div(class="stat-list")
-      a(class="stat-list-title" style="font-size: 20px" href='/stats') Stats
-      table(class="stat-list__table")
-        each stat in stats
-          tr
-            td
-              label(class="stat-list__stat-label" for=stat.name) #{ stat.name + ": "}
-            td
-              input(value="0" class="stat-list__input" id=stat._id type="text" size="8")
-            td
-              p(class="stat-list__stat-label")= "+"
-            td
-              p(class="stat-list__difference-label" id="diff" + stat._id) 0
-            td
-              p(class="stat-list__stat-label")= "="
-            td
-              p(class="stat-list__stat-label" id="output" + stat._id) 0
+    a(class="stat-list-title" style="font-size: 20px" href='/stats') Stats
+    div(class="stat-section")
+      each stat_category in stat_categories
+        div(class="stat-list")
+          br
+          table(class="stat-list__table") #{ stat_category.name }
+            each stat in stats
+              if (String(stat_category._id) == String(stat.stat_category))
+                tr
+                  td
+                    label(class="stat-list__stat-label" for=stat.name) #{ stat.name + ": "}
+                  td
+                    input(value="0" class="stat-list__input" id=stat._id type="text" size="8")
+                  td
+                    p(class="stat-list__stat-label")= "+"
+                  td
+                    p(class="stat-list__difference-label" id="diff" + stat._id) 0
+                  td
+                    p(class="stat-list__stat-label")= "="
+                  td
+                    p(class="stat-list__stat-label" id="output" + stat._id) 0
+    
     div(class="buff-list")
       a(style="font-size: 20px" href='/buffs') Buffs
       form(class="buff-list__form" action="rest/buffsets" method="GET")

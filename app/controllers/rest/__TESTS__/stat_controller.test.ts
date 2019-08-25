@@ -1,5 +1,7 @@
+import { StatDocumentFields, statModel } from "../../../models/stat";
+import { StatCategoryModel } from "../../../models/stat_category";
 import { startConnectionToTestDB, stopConnectionToTestDB } from "../../../test_utils/connection_utils";
-import { statModel } from "../../../models/stat";
+import { getUniqueString } from "../../../test_utils/value_generator";
 import { StatController } from "../stat_controller";
 
 beforeAll(startConnectionToTestDB);
@@ -28,11 +30,14 @@ test("StatController.createStat() returns an error when sent a request with inva
 
 test("StatController.createStat() makes the correct stat when sent a request with valid params.", async () => {
 
-    const statName: string = "StatController.createStat() valid stat name yhzxysadf";
+    const statCategoryDocument = await new StatCategoryModel({ name: getUniqueString() }).save();
+
+    const statName: string = getUniqueString();
 
     const req: any = {
         query: {
-            name: statName
+            name: statName,
+            stat_category: statCategoryDocument._id
         },
     };
 
@@ -67,18 +72,25 @@ test("StatController.deleteStat() throws an error when sent empty query.", async
 
 test("StatController.deleteStat() deletes the appropriate stat when a request with the correct _id is made.", async () => {
 
-    const statValues = { name: "Stat name for deleted stat mongo test." };
+    const statCategoryDocument = await new StatCategoryModel({ name: getUniqueString() }).save();
 
-    const createdStat = await statModel.create(statValues);
-    const req: any = {
-        query: { _id: createdStat.id }
-    };
-    const res: any = { send: jest.fn() };
-    const next = jest.fn();
+    const statValues: StatDocumentFields = { stat_category: statCategoryDocument._id, name: getUniqueString() };
 
     const findStat = async () => {
         return await statModel.findOne(statValues);
     }
+
+    expect(await findStat()).toBeNull();
+
+    const createdStat = await statModel.create(statValues);
+
+    const req: any = {
+        query: { _id: createdStat.id }
+    };
+
+    const res: any = { send: jest.fn() };
+
+    const next = jest.fn();
 
     expect(await findStat()).not.toBeNull();
 
@@ -90,13 +102,13 @@ test("StatController.deleteStat() deletes the appropriate stat when a request wi
 
 test("StatController.editStat() correctly edits the value of a stat when sent a valid request.", async () => {
 
-    const unEditedStatValues = { name: "Unedited stat name test #1" };
-
+    const startingStatCategory = await new StatCategoryModel({ name: getUniqueString() }).save();
+    const unEditedStatValues: StatDocumentFields = { stat_category: startingStatCategory._id, name: "Unedited stat name test #1" };
     const unEditedStat = await statModel.create(unEditedStatValues);
 
-    const editedStatValues = { name: "Edited name", _id: unEditedStat._id };
 
-    expect(unEditedStat.name).not.toEqual(editedStatValues.name);
+    const endingStatCategory = await new StatCategoryModel({ name: getUniqueString() }).save();
+    const editedStatValues = { stat_category: endingStatCategory._id, name: "Edited name", _id: unEditedStat._id };
 
     const req: any = {
         query: editedStatValues
@@ -114,6 +126,9 @@ test("StatController.editStat() correctly edits the value of a stat when sent a 
     expect(editedStat).not.toBeNull();
 
     if (editedStat) {
+        expect(editedStat.name).toEqual(editedStatValues.name);
+        expect(editedStat.stat_category).toEqual(editedStatValues.stat_category);
+
         expect(editedStat.name).not.toEqual(unEditedStat.name);
     }
 });
