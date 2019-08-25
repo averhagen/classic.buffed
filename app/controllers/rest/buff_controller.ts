@@ -21,13 +21,15 @@ export class BuffController {
             if (foundBuff == null) {
                 res.status(404).send("Buff not found");
             } else {
-                if (req.query.rank) {
+                if (req.query.rank)
                     foundBuff.rank = req.query.rank;
-                }
 
-                if (req.query.name) {
+                if (req.query.name)
                     foundBuff.name = req.query.name;
-                }
+
+                if (req.query.buff_category)
+                    foundBuff.buff_category = req.query.buff_category;
+
                 res.send(await foundBuff.save());
             }
         } catch (error) {

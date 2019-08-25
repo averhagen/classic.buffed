@@ -11,33 +11,39 @@ export class WebAppBuffController {
     public async renderViewAllBuffsPage(req: Request, res: Response, next: NextFunction) {
         console.log("Web App Request: Render View All Buffs");
         const buffs = await BuffModel.find().populate('buff_category').exec();
-        for(let i = 0; i < buffs.length; i ++) {
+        for (let i = 0; i < buffs.length; i++) {
             console.log(buffs[i]);
         }
         res.render('buffs/view_all_buffs.pug', { buffs: buffs });
     }
 
     public async renderCreateBuffPage(req: Request, res: Response, next: NextFunction) {
-        console.log("Render Create Buff Page Requested.");
+        console.log("Web App Request: Render Create Buff Page");
         const buffCategories = await BuffCategoryModel.find().exec();
         res.render('buffs/create_buff.pug', { buff_categories: buffCategories });
     }
 
     public async renderEditBuffPage(req: Request, res: Response, next: NextFunction) {
-        console.log("Render Edit Buff Page Requested.");
+        console.log("Web App Request: Render Edit Buff Page");
         try {
             const foundBuff = await BuffModel.findOne({ _id: req.query._id }).exec();
             if (foundBuff == null)
                 throw new Error("Unable to find Buff");
             const buffStatValues = await BuffStatValue.find({ buff: foundBuff }).populate('stat').exec();
-            res.render('buffs/edit_buff.pug', { buff: foundBuff, buffStatValues: buffStatValues, stats: await statModel.find().exec() });
+            res.render('buffs/edit_buff.pug',
+                {
+                    buff: foundBuff,
+                    buff_categories: await BuffCategoryModel.find().exec(),
+                    buffStatValues: buffStatValues,
+                    stats: await statModel.find().exec()
+                });
         } catch (error) {
             next(error);
         }
     }
 
     public async deleteBuff(req: Request, res: Response, next: NextFunction) {
-        console.log("Received Buff delete request: " + req.url);
+        console.log("Web App Request: Delete Buff");
         try {
             await axios.default.delete("/rest/buffs?_id=" + req.query._id, { baseURL: "http://localhost:3000" });
             res.redirect('/buffs');
@@ -48,7 +54,7 @@ export class WebAppBuffController {
     }
 
     public async editBuff(req: Request, res: Response, next: NextFunction) {
-        console.log("Edit Buff Requested.");
+        console.log("Web App Request: Edit Buff");
         try {
             const params: any = {};
 
@@ -57,6 +63,8 @@ export class WebAppBuffController {
             } else {
                 throw new Error("Invalid input.");
             }
+
+            params.buff_category = req.body.buff_category;
 
             if (req.body.name) {
                 params.name = req.body.name;
@@ -74,7 +82,7 @@ export class WebAppBuffController {
     }
 
     public async addBuffStatValue(req: Request, res: Response, next: NextFunction) {
-        console.log("Add buff stat value called");
+        console.log("Web App Reqeust: Create Buff Stat Value");
         try {
             const params: any = {};
 
