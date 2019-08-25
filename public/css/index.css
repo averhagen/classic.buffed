@@ -3,14 +3,20 @@ body {
     color: #FFD100;
     font-family: 'Nunito';
     display: flex;
-    justify-content: flex-end;
+}
+
+.stat-section {
+    display: flex;
+    flex-grow: 2;
+}
+
+.stat-list {
+    margin: 10px;
+    color: #FFD100;
 }
 
 .stat-list-title {
     text-decoration: none;
-}
-
-.stat-list-title {
     color: #FFD100;
 }
 
@@ -20,11 +26,6 @@ body {
     border: solid 1px;
     font-size: large;
     background: rgb(63, 63, 63);
-}
-
-.stat-list {
-    flex-grow: 2;
-    color: #FFD100;
 }
 
 .stat-list__input {

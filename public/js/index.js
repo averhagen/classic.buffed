@@ -3,6 +3,7 @@
 console.log("Index js loaded.");
 
 function getStatDifferentials() {
+    resetOutputAndDifferenceLabels();
     fetch('rest/buffsets' + createQueryString(getSelectedBuffIds())).then(function (response) {
         return response.json();
     }).then(updateStatDifferentials).catch(function (error) {
@@ -31,16 +32,31 @@ function createQueryString(buffIds) {
 }
 
 function updateStatDifferentials(statDifferentials) {
-    setOutputLabelsToMatchInputValue();
     addStatDifferentialsToOutputLabels(statDifferentials);
 }
 
-function setOutputLabelsToMatchInputValue() {
+function resetOutputAndDifferenceLabels() {
+    console.log("Setting Outputs to Equal inputs");
     let statInputs = document.getElementsByClassName("stat-list__input");
     for (let i = 0; i < statInputs.length; i++) {
-        let expectedId = "output" + statInputs[i].id;
-        let outputLabel = document.getElementById(expectedId);
-        outputLabel.innerHTML = statInputs[i].value;
+        setDifferenceLabelToEqualValue(statInputs[i].id, 0);
+        setStatOutputLabelToEqualValue(statInputs[i].id, statInputs[i].value);
+    }
+}
+
+function setDifferenceLabelToEqualValue(statId, newValue) {
+    let expectedDiffLabelId = "diff" + statId;
+    let diffLabel = document.getElementById(expectedDiffLabelId);
+    if (diffLabel) {
+        diffLabel.innerHTML = newValue;
+    }
+}
+
+function setStatOutputLabelToEqualValue(statId, newValue) {
+    let expectedId = "output" + statId;
+    let outputLabel = document.getElementById(expectedId);
+    if (outputLabel) {
+        outputLabel.innerHTML = newValue;
     }
 }
 
@@ -49,13 +65,13 @@ function addStatDifferentialsToOutputLabels(statDifferentials) {
         let currentStatDifferential = statDifferentials[i];
 
         let diffLabel = document.getElementById("diff" + currentStatDifferential.stat._id);
-        diffLabel.innerHTML = currentStatDifferential.difference;
-        
-        let outputLabel = document.getElementById("output" + currentStatDifferential.stat._id);
-        outputLabel.innerHTML = parseInt(outputLabel.innerHTML) + currentStatDifferential.difference;
-    }
-}
+        if (diffLabel) {
+            diffLabel.innerHTML = currentStatDifferential.difference;
+        }
 
-function myFunction() {
-    console.log("My Function Called");
+        let outputLabel = document.getElementById("output" + currentStatDifferential.stat._id);
+        if (outputLabel) {
+            outputLabel.innerHTML = parseInt(outputLabel.innerHTML) + currentStatDifferential.difference;
+        }
+    }
 }
