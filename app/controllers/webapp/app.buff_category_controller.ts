@@ -17,6 +17,23 @@ export class WebAppBuffCategoryController {
         res.redirect('/buffcategory');
     }
 
+    public async renderEditBuffCategoryPage(req: Request, res: Response, next: NextFunction) {
+        console.log("Render edit buff category page requested");
+        const buffCategoryId = req.query._id;
+        console.log("Found buff Id: " + buffCategoryId);
+        try {
+            if (buffCategoryId) {
+                const buffCategory = await BuffCategoryModel.findById(buffCategoryId).exec();
+                if (buffCategory) {
+                    return res.render("buff_category/edit_buff_category.pug", { buff_category: buffCategory });
+                }
+            }
+        } catch (error) {
+            next(error);
+        }
+        return res.redirect("/buffcategory");
+    }
+
     public async renderViewAllBuffCategoriesPage(req: Request, res: Response, next: NextFunction) {
         console.log("Render View All Buff Categories requested.");
         const buffCategories = await BuffCategoryModel.find().exec();
