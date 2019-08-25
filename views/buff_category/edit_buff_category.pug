@@ -1,0 +1,9 @@
+h1= "Edit Buff Category"
+
+form(action="/buffcategory/edit" method="POST")
+    label(for="name") Name:
+    input(type="TEXT" value=buff_category.name name="name")
+
+    br
+
+    button(type="SUBMIT") Save
