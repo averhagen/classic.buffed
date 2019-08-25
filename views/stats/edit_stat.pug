@@ -9,5 +9,13 @@ form(action="/stats/edit" method="POST")
     input(type="text" name="name" value=stat.name)
 
     br
+
+    label(for="stat_category") Category:
+    select(name="stat_category")
+        each stat_category in stat_categories
+            if (String(stat_category._id) == String(stat.stat_category))
+                option(value=stat_category._id selected) #{ stat_category.name }
+            else
+                option(value=stat_category._id) #{ stat_category.name }    
     
     button(type="Submit") Save
