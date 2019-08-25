@@ -8,6 +8,7 @@ import { buffRouter } from './routes/webapp/buff';
 import { statRouter } from './routes/webapp/stats';
 import { buffCategoryRouter } from './routes/webapp/buff_category';
 import { statCategoryRouter } from './routes/webapp/stat_category';
+import { StatCategoryModel } from './models/stat_category';
 
 // Create a new express application instance
 const app: express.Application = express();
@@ -28,7 +29,8 @@ app.get('/index', async function (req, res) {
   try {
     const buffs = await BuffModel.find().exec();
     const stats = await statModel.find().exec();
-    res.render('index', { title: "Classic.Buffed", stats: stats, buffs: buffs });
+    const statCategories = await StatCategoryModel.find().exec();
+    res.render('index', { title: "Classic.Buffed", stats: stats, stat_categories: statCategories, buffs: buffs });
   } catch (error) {
     console.log(error);
   }
