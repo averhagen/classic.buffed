@@ -8,4 +8,11 @@ const webAppBuffCategoryController = new WebAppBuffCategoryController();
 buffCategoryRouter.get('/create', webAppBuffCategoryController.renderCreateBuffCategoryPage);
 buffCategoryRouter.post('/create', webAppBuffCategoryController.createBuffCategory);
 
+buffCategoryRouter.get('', webAppBuffCategoryController.renderViewAllBuffCategoriesPage);
+
+buffCategoryRouter.post('/delete', webAppBuffCategoryController.deleteBuffCategory);
+
+buffCategoryRouter.get('/edit', webAppBuffCategoryController.renderEditBuffCategoryPage);
+buffCategoryRouter.post('/edit', webAppBuffCategoryController.editBuffCategory);
+
 export { buffCategoryRouter } 

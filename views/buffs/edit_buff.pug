@@ -7,13 +7,23 @@ div
 
         input(type="hidden", value=buff._id name="_id")
 
-        label(for="name") Buff Name:
+        label(for="name") Buff Name: 
         input(type="text", value=buff.name placeholder="Buff Name" name="name")
         
         br
 
-        label(for="rank") Buff Rank:
+        label(for="rank") Buff Rank: 
         input(type="text", value=buff.rank placeholder="Buff Rank" name="rank")
+
+        br
+
+        label(for="buff_category") Category: 
+        select(name="buff_category")
+            each buff_category in buff_categories
+                if (String(buff_category._id) == String(buff.buff_category))
+                    option(value=buff_category._id selected="selected") #{ buff_category.name }
+                else
+                    option(value=buff_category._id) #{ buff_category.name }
 
         br
         

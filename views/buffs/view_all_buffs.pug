@@ -5,6 +5,8 @@ each buff in buffs
         form(method="POST" action="/buffs/delete?_id=" + buff._id )
             p= buff.name
             p= "Rank: " + buff.rank
+            if buff.buff_category && buff.buff_category.name
+                p= "Category: " + buff.buff_category.name 
             button(type="Submit") Delete
         
         a(href="/buffs/edit?_id=" + buff._id) Edit

@@ -19,6 +19,7 @@ restRouter.delete("/buffs", buffController.deleteBuff);
 const buffCategoryController = new BuffCategoryController();
 restRouter.get("/buffcategory", buffCategoryController.getBuffCategory);
 restRouter.post("/buffcategory", buffCategoryController.createBuffCategory);
+restRouter.put("/buffcategory", buffCategoryController.editBuffCategory);
 
 // REST routes for stats
 const statController = new StatController();
