@@ -22,7 +22,7 @@
     "@types/express": "^4.17.0",
     "@types/mongoose": "^5.5.8",
     "@types/pug": "^2.0.4",
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "express": "^4.17.1",
     "mongoose": "^5.6.4",
     "pug": "^2.0.4",
